@@ -1,5 +1,6 @@
 // tailwind theme
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -17,6 +18,23 @@ module.exports = {
   // override theme
   theme: {
     // alternative mx-auto
+    colors: {
+      // default theme colors
+      primary: {
+        '50': '#fff1f1',
+        '100': '#ffe1e1',
+        '200': '#ffc7c7',
+        '300': '#ffa0a0',
+        '400': '#ff6b6b',
+        '500': '#f83b3b',
+        '600': '#e51d1d',
+        '700': '#c11414',
+        '800': '#a01414',
+        '900': '#841818',
+        '950': '#480707',
+      },
+      ...colors
+    },
     container: {
       center: true,
     },
