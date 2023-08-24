@@ -1,19 +1,15 @@
 import {List, ListItem} from "../components";
-import {useEffect, useState} from "react";
-import TodoService, {TodoResponse} from "../services/todo-service";
+import {useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
+import {retrieveList} from "../redux/actions/ListActions";
 
 function TodoList() {
-    const [todoList, setTodoList] = useState<Array<TodoResponse>>([]);
-
-    const getData = async () => {
-        await TodoService.findAll().then(
-            (res) => setTodoList(res.data)
-        )
-    }
+    const {todoList} = useAppSelector(x => x.list);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getData();
-    }, []);
+        dispatch(retrieveList());
+    }, [dispatch]);
 
     return(
         <List className="mt-4">
