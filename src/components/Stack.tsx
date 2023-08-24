@@ -1,31 +1,28 @@
 import React from "react";
 
-interface IStack {
+interface IStack extends React.HTMLAttributes<HTMLDivElement>{
     children?: React.ReactNode;
     direction?: "column" | "row";
-    spacing?: number;
+    spacing?: number | string;
     itemsCenter?: boolean;
     justifyCenter?: boolean;
-    className?: string;
 }
 
-Stack.defaultProps = {
-    className: ""
-}
-
-function Stack({children, direction, spacing, itemsCenter, justifyCenter, className} : IStack) {
+function Stack({children, direction, spacing, itemsCenter, justifyCenter, className, ...props} : IStack) {
+    const isRow = direction === "row";
 
     const classes = [
         "flex",
         direction === "row" ? "flex-row" : "flex-col",
-        spacing && (direction === "row" ? `space-x-${spacing}` : `space-y-${spacing}`),
+        (typeof spacing == "number") && (isRow ? `space-x-${spacing}` : `space-y-${spacing}`),
+        spacing === "auto" && (isRow ? "justify-between" : "align-items"),
         itemsCenter && "items-center",
         justifyCenter && "justify-center",
         className
     ].join(" ").trim();
 
     return(
-        <div className={classes}>
+        <div className={classes} {...props}>
             {children}
         </div>
     )

@@ -7,7 +7,7 @@ interface TodoState {
     selectedTodo: any;
 }
 
-const initialState: TodoState = {todoList: [], selectedTodo: false};
+const initialState: TodoState = {todoList: [], selectedTodo: {}};
 
 export const TodoListSlice = createSlice({
     name: 'todoList',
@@ -18,9 +18,8 @@ export const TodoListSlice = createSlice({
         setTodoList: (state, action: PayloadAction<Array<TodoResponse>>) => {
             state.todoList = action.payload
         },
-        selectTodo: (state, action: PayloadAction<TodoResponse>) => {
+        selectTodo: (state, action: PayloadAction<any>) => {
             state.selectedTodo = action.payload
-            console.log(action.payload)
         },
     },
 })
