@@ -1,15 +1,16 @@
 import React from 'react';
+import {Container, Image, Stack, Typography} from "./components";
 
 function App() {
   return (
-      <div className="container h-screen w-screen">
-          <div className="flex flex-col items-center justify-center h-full v-full space-y-2">
-              <img src="/logo192.png" alt="logo"/>
-              <h1 className="text-3xl font-bold">
+      <Container className="h-screen">
+          <Stack direction="column" itemsCenter justifyCenter spacing={2} className="h-full v-full">
+              <Image src="/logo192.png" alt="logo"/>
+              <Typography variant="h1" className="text-3xl font-bold">
                   Agenda Todo App
-              </h1>
-          </div>
-      </div>
+              </Typography>
+          </Stack>
+      </Container>
   );
 }
 
