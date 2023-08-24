@@ -18,7 +18,7 @@ function TodoList() {
     return(
         <List className="mt-4 w-52">
             {Object.values(todoList).map(item => (
-                <ListItem>{item.content}</ListItem>
+                <ListItem key={item.todoId}>{item}</ListItem>
             ))}
         </List>
     )

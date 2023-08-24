@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
+import {ChevronRightIcon} from "@heroicons/react/20/solid";
 
 interface IListItem {
-    children?: React.ReactNode;
-    selected?: boolean;
+    children?: any;
     className?: string;
 }
 
@@ -10,22 +10,30 @@ ListItem.defaultProps = {
     className: ""
 }
 
-function ListItem({children, selected, className} : IListItem) {
+function ListItem({children, className} : IListItem) {
+    const [checked, setChecked] = useState(false);
+
     const classes = [
-        "w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600",
+        "relative inline-flex items-center w-full px-4 py-2 font-medium border-b border-gray-200 " +
+        "hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 dark:border-gray-600 " +
+        "dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white",
         className
     ].join(" ").trim();
 
+    const handleChange = (event: any) => {
+        const value = event.target.checked;
+        setChecked(value);
+    }
+
     return(
-        <li className={classes}>
-            <div className="flex items-center pl-3">
-                <input id="todo-checkbox" type="checkbox" value="" checked={selected}
-                       className="transition w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
-                    <label htmlFor="todo-checkbox" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        {children}
-                    </label>
-            </div>
-        </li>
+        <button aria-current="true" type="button" className={classes}>
+            <input id="todo-checkbox" type="checkbox" value="" onChange={handleChange}
+                   className="transition w-4 h-4 mr-4 text-primary-600 bg-gray-100 border-gray-300 rounded
+                   focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700
+                   dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
+            <span className={checked ? "transition line-through" : "transition"}>{children.content}</span>
+            <ChevronRightIcon className="h-8 w-6 text-gray-500 ml-auto"/>
+        </button>
     )
 }
 
