@@ -16,7 +16,7 @@ function TodoList() {
     }, []);
 
     return(
-        <List className="mt-4 w-52">
+        <List className="mt-4">
             {Object.values(todoList).map(item => (
                 <ListItem key={item.todoId}>{item}</ListItem>
             ))}

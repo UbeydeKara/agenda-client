@@ -27,10 +27,12 @@ function ListItem({children, className} : IListItem) {
 
     return(
         <button aria-current="true" type="button" className={classes}>
+
             <input id="todo-checkbox" type="checkbox" value="" onChange={handleChange}
                    className="transition w-4 h-4 mr-4 text-primary-600 bg-gray-100 border-gray-300 rounded
                    focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700
                    dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
+
             <span className={checked ? "transition line-through" : "transition"}>{children.content}</span>
             <ChevronRightIcon className="h-8 w-6 text-gray-500 ml-auto"/>
         </button>

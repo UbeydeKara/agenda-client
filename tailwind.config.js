@@ -12,7 +12,7 @@ module.exports = {
   // tailwind doesn't support dynamic classes, need to use safelist
   safelist: [
     {
-      pattern: /space-(x|y)-(2|4)/,
+      pattern: /space-(x|y)-([0-9])/,
     },
   ],
   // override theme
