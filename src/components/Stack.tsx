@@ -16,14 +16,16 @@ Stack.defaultProps = {
 function Stack({children, direction, spacing, itemsCenter, justifyCenter, className} : IStack) {
 
     const classes = [
+        "flex",
         direction === "row" ? "flex-row" : "flex-col",
         spacing && (direction === "row" ? `space-x-${spacing}` : `space-y-${spacing}`),
         itemsCenter && "items-center",
-        justifyCenter && "justify-center"
-    ].join(" ");
+        justifyCenter && "justify-center",
+        className
+    ].join(" ").trim();
 
     return(
-        <div className={`flex ${classes} ${className}`.trim()}>
+        <div className={classes}>
             {children}
         </div>
     )

@@ -16,7 +16,7 @@ function List({children, className} : IList) {
     ].join(" ").trim();
 
     return(
-        <ul className={classes}>
+        <ul className={classes} defaultValue={2}>
             {children}
         </ul>
     )
