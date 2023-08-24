@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Image, Stack, Typography} from "./components";
+import {TodoList} from "./sections";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
               <Typography variant="h1" className="text-3xl font-bold">
                   Agenda Todo App
               </Typography>
+              <TodoList/>
           </Stack>
       </Container>
   );
