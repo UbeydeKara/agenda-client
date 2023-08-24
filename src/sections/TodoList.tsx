@@ -1,12 +1,25 @@
 import {List, ListItem} from "../components";
+import {useEffect, useState} from "react";
+import TodoService, {TodoResponse} from "../services/todo-service";
 
 function TodoList() {
+    const [todoList, setTodoList] = useState<Array<TodoResponse>>([]);
+
+    const getData = async () => {
+        await TodoService.findAll().then(
+            (res) => setTodoList(res.data)
+        )
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
     return(
         <List className="mt-4 w-52">
-            <ListItem>Profile</ListItem>
-            <ListItem>Settings</ListItem>
-            <ListItem selected>Messages</ListItem>
-            <ListItem>Download</ListItem>
+            {Object.values(todoList).map(item => (
+                <ListItem>{item.content}</ListItem>
+            ))}
         </List>
     )
 }
