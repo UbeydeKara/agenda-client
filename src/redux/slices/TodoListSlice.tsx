@@ -3,10 +3,11 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // Define a type for the slice state
 interface TodoState {
-    todoList: Array<TodoResponse>
+    todoList: Array<TodoResponse>;
+    selectedTodo: any;
 }
 
-const initialState: TodoState = {todoList: []};
+const initialState: TodoState = {todoList: [], selectedTodo: false};
 
 export const TodoListSlice = createSlice({
     name: 'todoList',
@@ -14,8 +15,14 @@ export const TodoListSlice = createSlice({
     initialState,
     reducers: {
         // Use the PayloadAction type to declare the contents of `action.payload`
-        retrieveAllList: (state, action: PayloadAction<Array<TodoResponse>>) => {
+        setTodoList: (state, action: PayloadAction<Array<TodoResponse>>) => {
             state.todoList = action.payload
+        },
+        selectTodo: (state, action: PayloadAction<TodoResponse>) => {
+            state.selectedTodo = action.payload
+            console.log(action.payload)
         },
     },
 })
+
+export const {setTodoList, selectTodo} = TodoListSlice.actions;
