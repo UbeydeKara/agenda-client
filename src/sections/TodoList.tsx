@@ -23,21 +23,23 @@ function TodoList() {
     }, [dispatch]);
 
     return(
-        <Stack direction="column" justifyCenter spacing={10} className={classes}>
+        <Stack justifyCenter spacing={10} className={classes}>
             <Typography variant="h1" className="text-5xl font-bold">
                 Yapılacaklar
             </Typography>
 
-            <Button variant="outlined" className="text-gray-400" onClick={() => selectItem({})}
-                    startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
-                Yeni Etkinlik Oluştur
-            </Button>
+            <Stack>
+                <Button variant="outlined" className="text-gray-400 !justify-start" onClick={() => selectItem({})}
+                        startIcon={<PlusIcon className="h-7 w-7 text-gray-500 mr-2"/>}>
+                    Yeni Etkinlik Oluştur
+                </Button>
 
-            <List className="mt-4">
-                {Object.values(todoList).map(item => (
-                    <ListItem key={item.todoId} onClick={() => selectItem(item)}>{item}</ListItem>
-                ))}
-            </List>
+                <List>
+                    {Object.values(todoList).map(item => (
+                        <ListItem key={item.todoId} onClick={() => selectItem(item)}>{item}</ListItem>
+                    ))}
+                </List>
+            </Stack>
         </Stack>
     )
 }

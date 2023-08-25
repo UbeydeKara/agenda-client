@@ -2,9 +2,13 @@ import http from "./http-common";
 
 const serviceUrl = "/todo"
 
-export interface TodoResponse {
+export interface TodoPayload {
     todoId: string;
-    content: string;
+    title: string;
+    description: string;
+    isDone: boolean;
+    createdAt: Date;
+    modifiedAt: Date;
 }
 
 const findAll = () => {
@@ -15,9 +19,14 @@ const save = (todo: object) => {
     return http.post(serviceUrl + "/save", todo);
 }
 
+const deleteById = (todoId: string) => {
+    return http.delete(`${serviceUrl}/${todoId}`);
+}
+
 const TodoService = {
     findAll,
-    save
+    save,
+    deleteById
 };
 
 export default TodoService;

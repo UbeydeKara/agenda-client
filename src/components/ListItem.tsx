@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {rippleEffect} from "../utils/Ripple";
 
@@ -8,11 +8,14 @@ interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 function ListItem(props: IListItem) {
     const [checked, setChecked] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const classes = [
-        "relative overflow-hidden inline-flex items-center w-full px-4 py-2 font-medium border-b border-gray-200 " +
-        "hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 dark:border-gray-600 " +
-        "dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white",
+        "relative transition-transform overflow-hidden inline-flex items-center w-full px-4 py-2 font-medium " +
+        "border-b border-gray-200 hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 " +
+        "dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 " +
+        "dark:focus:text-white",
+        loaded ? "scale-100" : "scale-50",
         props.className
     ].join(" ").trim();
 
@@ -21,15 +24,20 @@ function ListItem(props: IListItem) {
         setChecked(value);
     }
 
+    useEffect(() => {
+        setLoaded(true);
+    }, []);
+
     return(
-        <button aria-current="true" type="button" className={classes} {...props} onMouseDown={rippleEffect}>
+        <button {...props} type="button" className={classes}
+                onMouseDown={e => rippleEffect(e, "dark")}>
 
             <input id="todo-checkbox" type="checkbox" value="" onChange={handleChange}
                    className="transition w-4 h-4 mr-4 text-primary-600 bg-gray-100 border-gray-300 rounded
                    focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700
                    dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
 
-            <span className={checked ? "transition line-through" : "transition"}>{props.children.content}</span>
+            <span className={checked ? "transition line-through" : "transition"}>{props.children.title}</span>
             <ChevronRightIcon className="h-8 w-6 text-gray-500 ml-auto"/>
         </button>
     )
