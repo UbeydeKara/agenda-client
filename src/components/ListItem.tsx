@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
+import {rippleEffect} from "../utils/Ripple";
 
 interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: any;
@@ -9,7 +10,7 @@ function ListItem(props: IListItem) {
     const [checked, setChecked] = useState(false);
 
     const classes = [
-        "relative inline-flex items-center w-full px-4 py-2 font-medium border-b border-gray-200 " +
+        "relative overflow-hidden inline-flex items-center w-full px-4 py-2 font-medium border-b border-gray-200 " +
         "hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 dark:border-gray-600 " +
         "dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white",
         props.className
@@ -21,7 +22,7 @@ function ListItem(props: IListItem) {
     }
 
     return(
-        <button aria-current="true" type="button" className={classes} {...props}>
+        <button aria-current="true" type="button" className={classes} {...props} onMouseDown={rippleEffect}>
 
             <input id="todo-checkbox" type="checkbox" value="" onChange={handleChange}
                    className="transition w-4 h-4 mr-4 text-primary-600 bg-gray-100 border-gray-300 rounded
