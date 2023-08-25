@@ -1,8 +1,9 @@
-import {List, ListItem, Stack, Typography} from "../components";
+import {Button, List, ListItem, Stack, Typography} from "../components";
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {retrieveList} from "../redux/actions/ListActions";
 import {selectTodo} from "../redux/slices/TodoListSlice";
+import {PlusIcon} from "@heroicons/react/20/solid";
 
 function TodoList() {
     const {todoList, selectedTodo} = useAppSelector(x => x.list);
@@ -26,6 +27,11 @@ function TodoList() {
             <Typography variant="h1" className="text-5xl font-bold">
                 Yapılacaklar
             </Typography>
+
+            <Button variant="outlined" className="text-gray-400" onClick={() => selectItem({})}
+                    startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
+                Yeni Etkinlik Oluştur
+            </Button>
 
             <List className="mt-4">
                 {Object.values(todoList).map(item => (

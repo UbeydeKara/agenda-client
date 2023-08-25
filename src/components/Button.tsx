@@ -1,28 +1,32 @@
-import React, {useRef} from "react";
+import React from "react";
 import {rippleEffect} from "../utils/Ripple";
 
 
-interface IButton extends React.FormHTMLAttributes<HTMLFormElement> {
-    variant?: string
+interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: "contained" | "outlined";
+    startIcon?: React.ReactNode;
+    className?: string;
 }
 
-function Button({variant = "contained", ...props} : IButton) {
-    // const ripple = new Ripple();
-    const button = useRef<any>();
+function Button({variant = "contained", startIcon, className, ...props} : IButton) {
 
-    const containedStyle = "relative overflow-hidden text-white bg-primary-500 hover:bg-primary-600 shadow-lg shadow-primary-500/50 " +
-        "dark:shadow-primary-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2";
+    const containedClass = "relative overflow-hidden flex flex-row items-center justify-center space-x-2 text-white " +
+        "bg-primary-500 hover:bg-primary-600 shadow-lg shadow-primary-500/50 dark:shadow-primary-800/80 font-medium " +
+        "rounded-lg text-sm px-5 py-3 text-center mr-2 mb-2";
 
-    const outlinedStyle = "relative overflow-hidden text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 " +
-        "font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 " +
-        "dark:hover:bg-gray-700 dark:hover:border-gray-600";
+    const outlinedClass = "relative overflow-hidden flex flex-row items-center justify-center space-x-2 text-gray-900 " +
+        "bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-3 mr-2 mb-2 " +
+        "dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600";
+
+    const classes = variant === "contained" ? containedClass : outlinedClass;
 
     const rippleTheme = variant === "contained" ? "light" : "dark";
 
     return(
-        <button ref={button} type="button" className={variant === "contained" ? containedStyle : outlinedStyle}
+        <button {...props} type="button" className={`${classes} ${className}`.trim()}
             onMouseDown={e => rippleEffect(e, rippleTheme)}>
-            {props.children}
+                {startIcon}
+                {props.children}
         </button>
     )
 }

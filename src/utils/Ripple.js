@@ -1,6 +1,6 @@
 const background = {
     light: "#EEEEEECC",
-    dark: "#E4E4E4CC"
+    dark: "#ffc7c7cc"
 }
 
 export function rippleEffect(event, theme = "light") {
@@ -24,7 +24,7 @@ export function rippleEffect(event, theme = "light") {
     circle.style.top = `${localY}px`;
 
     // add bg
-    circle.style.backgroundColor = `background-color: ${background[theme]};`;
+    circle.style.backgroundColor = background[theme];
 
     // add ripple class for animation
     circle.classList.add("ripple");
