@@ -8,5 +8,6 @@ import Drawer from "./Drawer";
 import TextField from "./TextField";
 import Form from "./Form";
 import Button from "./Button";
+import IconButton from "./IconButton";
 
-export {Container, Stack, Image, Typography, List, ListItem, Drawer, TextField, Form, Button}
+export {Container, Stack, Image, Typography, List, ListItem, Drawer, TextField, Form, Button, IconButton}
