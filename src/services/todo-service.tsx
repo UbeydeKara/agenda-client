@@ -7,6 +7,7 @@ export interface TodoPayload {
     title: string;
     description: string;
     isDone: boolean;
+    dueAt: Date;
     createdAt: Date;
     modifiedAt: Date;
 }
@@ -19,6 +20,10 @@ const save = (todo: object) => {
     return http.post(serviceUrl + "/save", todo);
 }
 
+const update = (todo: object) => {
+    return http.post(serviceUrl + "/update", todo);
+}
+
 const deleteById = (todoId: string) => {
     return http.delete(`${serviceUrl}/${todoId}`);
 }
@@ -26,6 +31,7 @@ const deleteById = (todoId: string) => {
 const TodoService = {
     findAll,
     save,
+    update,
     deleteById
 };
 

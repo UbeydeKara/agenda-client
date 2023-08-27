@@ -21,6 +21,13 @@ export const TodoListSlice = createSlice({
         addTodo: (state, action: PayloadAction<any>) => {
             state.todoList = [...state.todoList, action.payload]
         },
+        updateTodo: (state, action: PayloadAction<TodoPayload>) => {
+            // Loop through the array to find the post you want to modify
+            state.todoList = state.todoList.map(obj => {
+                    if (obj.todoId === action.payload.todoId) return action.payload;
+                    return obj;
+                })
+        },
         deleteTodo: (state, action: PayloadAction<string>) => {
             state.todoList = state.todoList.filter(x => x.todoId !== action.payload)
         },
@@ -33,5 +40,6 @@ export const TodoListSlice = createSlice({
 export const {
     setTodoList,
     addTodo,
+    updateTodo,
     deleteTodo,
     selectTodo} = TodoListSlice.actions;
