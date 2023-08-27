@@ -1,4 +1,4 @@
-import {Button, List, ListItem, Stack, Typography} from "../components";
+import {Button, Card, List, ListItem, Stack, Typography} from "../components";
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {retrieveList} from "../redux/actions/ListActions";
@@ -24,14 +24,24 @@ function TodoList() {
 
     return(
         <Stack justifyCenter spacing={10} className={classes}>
-            <Typography variant="h1" className="text-5xl font-bold">
-                Yapılacaklar
-            </Typography>
+
+            <Stack direction="row" spacing={6}>
+                <Typography variant="h1" className="text-5xl font-bold">
+                    Yapılacaklar
+                </Typography>
+                <Card className="px-3 py-1">
+                    <Typography variant="h6" className="text-4xl">
+                        {todoList.length}
+                    </Typography>
+                </Card>
+            </Stack>
 
             <Stack>
                 <Button variant="outlined" className="text-gray-400 !justify-start" onClick={() => selectItem({})}
-                        startIcon={<PlusIcon className="h-7 w-7 text-gray-500 mr-2"/>}>
-                    Yeni Etkinlik Oluştur
+                        startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
+                    <Typography variant="span">
+                        Yeni Etkinlik Oluştur
+                    </Typography>
                 </Button>
 
                 <List>

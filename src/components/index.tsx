@@ -9,5 +9,6 @@ import TextField from "./TextField";
 import Form from "./Form";
 import Button from "./Button";
 import IconButton from "./IconButton";
+import Card from "./Card";
 
-export {Container, Stack, Image, Typography, List, ListItem, Drawer, TextField, Form, Button, IconButton}
+export {Container, Stack, Image, Typography, List, ListItem, Drawer, TextField, Form, Button, IconButton, Card}

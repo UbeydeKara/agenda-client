@@ -1,8 +1,8 @@
 import React from "react";
 
-interface ITypography {
+interface ITypography extends React.LabelHTMLAttributes<HTMLLabelElement> {
     children?: React.ReactNode;
-    variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
     className?: string;
 }
 
