@@ -1,21 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {Button, Drawer, Form, IconButton, Stack, TextField, Typography} from "../components";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {XMarkIcon} from "@heroicons/react/20/solid";
+import {ChevronDownIcon, XMarkIcon} from "@heroicons/react/20/solid";
 import {selectTodo} from "../redux/slices/TodoListSlice";
-import {deleteTodoById, saveTodo} from "../redux/actions/ListActions";
+import {deleteTodoById, saveTodo, updateTodoAction} from "../redux/actions/ListActions";
+import Datepicker from "tailwind-datepicker-react"
+import {options} from "../constants/DatePickerOptions";
 
 function TodoDetail() {
     const {selectedTodo} = useAppSelector(x => x.list);
     const dispatch = useAppDispatch();
 
     const [open, setOpen] = useState(false);
+    const [pickerOpen, setPickerOpen] = useState(false);
     const [values, setValues] = useState(selectedTodo);
 
     const newRecord = Object.keys(selectedTodo).length === 0;
 
+    // Drawer
     const handleSave = () => {
-        dispatch(saveTodo(values));
+        dispatch(newRecord ? saveTodo(values) : updateTodoAction(values));
     }
 
     const handleDelete = () => {
@@ -35,6 +39,21 @@ function TodoDetail() {
         dispatch(selectTodo(false));
     }
 
+    // DatePicker
+    const dateChange = (date: Date) => {
+        setValues({...values, dueAt: date});
+        setPickerOpen(false);
+    };
+
+    const handlePickerShow = (state: boolean) => {
+        setPickerOpen(state);
+    }
+
+    const handlePickerOpen = () => {
+        setPickerOpen(true);
+    }
+
+    // useEffect
     useEffect(() => {
         setValues(selectedTodo);
         setOpen(Boolean(selectedTodo));
@@ -67,6 +86,20 @@ function TodoDetail() {
                     rows={6}
                     className="!bg-gray-100"
                     onChange={handleChange}/>
+
+                <Stack direction="row" spacing={4} itemsCenter>
+                    <Typography variant="span" className="mb-1">
+                        Bitiş Tarihi
+                    </Typography>
+
+                    <Datepicker options={options} onChange={dateChange} show={pickerOpen} setShow={handlePickerShow} classNames="!w-auto">
+                        <Button variant="outlined" className="!bg-gray-100 !px-1 !py-1"
+                                endIcon={<ChevronDownIcon className="h-7 w-7 text-gray-500"/>}
+                                onClick={handlePickerOpen}>
+                            {values.dueAt ? new Date(values.dueAt).toLocaleDateString() : new Date().toLocaleDateString()}
+                        </Button>
+                    </Datepicker>
+                </Stack>
 
                 <Stack direction="row" spacing={3} itemsCenter>
                     <Button variant="outlined" className="!bg-gray-100 w-full" onClick={handleDelete}>

@@ -8,6 +8,7 @@ module.exports = {
   darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js", // datepicker
   ],
   // tailwind doesn't support dynamic classes, need to use safelist
   safelist: [
@@ -17,9 +18,8 @@ module.exports = {
   ],
   // override theme
   theme: {
-    // alternative mx-auto
+    // default theme colors
     colors: {
-      // default theme colors
       primary: {
         '50': '#fff1f1',
         '100': '#ffe1e1',
@@ -36,7 +36,7 @@ module.exports = {
       ...colors
     },
     container: {
-      center: true,
+      center: true, // alternative mx-auto
     },
     extend: {
       // override default font
