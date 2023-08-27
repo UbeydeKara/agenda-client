@@ -11,7 +11,7 @@ function ListItem(props: IListItem) {
     const [loaded, setLoaded] = useState(false);
 
     const classes = [
-        "relative transition-transform overflow-hidden inline-flex items-center w-full px-4 py-2 font-medium " +
+        "relative transition-transform overflow-hidden inline-flex items-center w-full px-4 py-2 " +
         "border-b border-gray-200 hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 " +
         "dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 " +
         "dark:focus:text-white",
