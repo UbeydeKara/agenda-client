@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {rippleEffect} from "../utils/Ripple";
+import {updateTodoAction} from "../redux/actions/ListActions";
+import {useAppDispatch} from "../redux/hooks";
 
 interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: any;
 }
 
 function ListItem(props: IListItem) {
-    const [checked, setChecked] = useState(false);
+    const item = props.children;
+    const [checked, setChecked] = useState(item.isDone || false);
     const [loaded, setLoaded] = useState(false);
+    const dispatch = useAppDispatch();
 
     const classes = [
         "relative transition-transform overflow-hidden inline-flex items-center w-full px-4 py-2 " +
@@ -22,6 +26,7 @@ function ListItem(props: IListItem) {
     const handleChange = (event: any) => {
         const value = event.target.checked;
         setChecked(value);
+        dispatch(updateTodoAction({...item, isDone: value}));
     }
 
     useEffect(() => {
@@ -32,12 +37,12 @@ function ListItem(props: IListItem) {
         <button {...props} type="button" className={classes}
                 onMouseDown={e => rippleEffect(e, "dark")}>
 
-            <input id="todo-checkbox" type="checkbox" value="" onChange={handleChange}
+            <input id="todo-checkbox" type="checkbox" defaultChecked={checked} onChange={handleChange}
                    className="transition w-4 h-4 mr-4 text-primary-600 bg-gray-100 border-gray-300 rounded
                    focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700
                    dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
 
-            <span className={checked ? "transition line-through" : "transition"}>{props.children.title}</span>
+            <span className={checked ? "transition line-through" : "transition"}>{item.title}</span>
             <ChevronRightIcon className="h-8 w-6 text-gray-500 ml-auto"/>
         </button>
     )

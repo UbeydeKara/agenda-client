@@ -39,7 +39,7 @@ function TodoList() {
             <Stack>
                 <Button variant="outlined" className="text-gray-400 !justify-start" onClick={() => selectItem({})}
                         startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
-                    <Typography variant="span">
+                    <Typography variant="span" className="text-gray-500">
                         Yeni Etkinlik Oluştur
                     </Typography>
                 </Button>

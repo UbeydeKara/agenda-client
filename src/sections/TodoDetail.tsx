@@ -63,7 +63,7 @@ function TodoDetail() {
         <Drawer open={open}>
             <Stack direction="row" spacing="auto" itemsCenter>
                 <Typography variant="h1" className="text-xl font-medium">
-                    Etkinlik
+                    {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}
                 </Typography>
 
                 <IconButton onClick={handleClose}>
