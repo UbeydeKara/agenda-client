@@ -13,17 +13,13 @@ function TodoList() {
         dispatch(selectTodo(item));
     };
 
-    const classes = [
-        "transition-all duration-500 h-screen"
-    ].join(" ").trim();
-
     useEffect(() => {
         dispatch(retrieveList());
     }, [dispatch]);
 
     return(
         <Container>
-            <Stack justifyCenter spacing={10} className={classes}>
+            <Stack justifyCenter spacing={10} className="h-screen">
                 <Stack direction="row" spacing={6}>
                     <Typography variant="h1" className="text-5xl font-bold">
                         Yapılacaklar

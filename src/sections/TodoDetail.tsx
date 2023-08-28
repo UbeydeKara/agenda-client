@@ -60,7 +60,7 @@ function TodoDetail() {
     }, [selectedTodo]);
 
     return(
-        <Drawer open={open} className="w-5/12 max-w-[480px]">
+        <Drawer open={open} className="min-w-[480px]">
             <Stack direction="row" spacing="auto" itemsCenter>
                 <Typography variant="h1" className="text-xl font-bold">
                     {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}

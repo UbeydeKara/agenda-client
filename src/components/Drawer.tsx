@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 
 interface IModal {
     children?: React.ReactNode;
@@ -15,9 +15,19 @@ Drawer.defaultProps = {
 
 function Drawer({children, direction = "right", open, className}: IModal) {
 
+    const animClass = useMemo(() => {
+        if (open)
+            return "";
+
+        if (direction === "right")
+            return "translate-x-full !min-w-0 !w-0";
+
+        return "-translate-x-full !min-w-0 !w-0";
+    }, [open]);
+
     const classes = [
         "h-screen p-8 rounded-xl overflow-y-auto transition-all duration-500 bg-gray-100 dark:bg-gray-800",
-        direction === "right" ? (!open && "translate-x-full w-0") : (!open && "-translate-x-full w-0"),
+        animClass,
         className
     ].join(" ").trim();
 
