@@ -13,7 +13,7 @@ Container.defaultProps = {
 
 function Container({children, className} : IContainer) {
     return(
-        <div className={`container ${className}`.trim()}>
+        <div className={`container px-10 ${className}`.trim()}>
             {children}
         </div>
     )

@@ -13,17 +13,11 @@ Drawer.defaultProps = {
     open: false
 }
 
-const directionPos = {
-    right: "right-0",
-    left: "left-0"
-}
-
 function Drawer({children, direction = "right", open, className}: IModal) {
 
     const classes = [
-        "fixed top-0 h-screen z-40 p-8 rounded-xl overflow-y-auto transition-transform duration-500 bg-gray-100 w-1/4 dark:bg-gray-800",
-        !open && "translate-x-full",
-        directionPos[direction],
+        "h-screen p-8 rounded-xl overflow-y-auto transition-all duration-500 bg-gray-100 dark:bg-gray-800",
+        direction === "right" ? (!open && "translate-x-full w-0") : (!open && "-translate-x-full w-0"),
         className
     ].join(" ").trim();
 

@@ -11,7 +11,7 @@ function TodoDetail() {
     const {selectedTodo} = useAppSelector(x => x.list);
     const dispatch = useAppDispatch();
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [pickerOpen, setPickerOpen] = useState(false);
     const [values, setValues] = useState(selectedTodo);
 
@@ -60,14 +60,14 @@ function TodoDetail() {
     }, [selectedTodo]);
 
     return(
-        <Drawer open={open}>
+        <Drawer open={open} className="w-5/12 max-w-[480px]">
             <Stack direction="row" spacing="auto" itemsCenter>
-                <Typography variant="h1" className="text-xl font-medium">
+                <Typography variant="h1" className="text-xl font-bold">
                     {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}
                 </Typography>
 
                 <IconButton onClick={handleClose}>
-                    <XMarkIcon className="h-7 w-7 text-gray-500 font-bold"/>
+                    <XMarkIcon className="h-7 w-7 text-gray-500"/>
                 </IconButton>
             </Stack>
 
@@ -88,7 +88,7 @@ function TodoDetail() {
                     onChange={handleChange}/>
 
                 <Stack direction="row" spacing={4} itemsCenter>
-                    <Typography variant="span" className="mb-1">
+                    <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
                         Bitiş Tarihi
                     </Typography>
 
