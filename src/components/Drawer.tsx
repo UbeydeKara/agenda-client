@@ -3,14 +3,13 @@ import React, {useMemo} from "react";
 interface IModal {
     children?: React.ReactNode;
     direction?: "right" | "left",
-    open?: boolean;
+    open: boolean;
     className?: string;
 }
 
-Drawer.defaultProps = {
-    className: "",
-    direction: "right",
-    open: false
+const directionClass = {
+    left: "left-0",
+    right: "right-0"
 }
 
 function Drawer({children, direction = "right", open, className}: IModal) {
@@ -20,13 +19,15 @@ function Drawer({children, direction = "right", open, className}: IModal) {
             return "";
 
         if (direction === "right")
-            return "translate-x-full !min-w-0 !w-0 !px-0";
+            return "translate-x-full";
 
-        return "-translate-x-full !min-w-0 !w-0 !px-0";
+        // if left direction
+        return "-translate-x-full";
     }, [open]);
 
     const classes = [
-        "h-screen p-8 rounded-xl transition-all duration-500 bg-gray-100 dark:bg-gray-800",
+        "fixed top-0 h-screen p-8 z-10 rounded-xl transition-all duration-700 backdrop-blur-sm bg-gray-100/[.82] dark:bg-gray-800",
+        directionClass[direction],
         animClass,
         className
     ].join(" ").trim();

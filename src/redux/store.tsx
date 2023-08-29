@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {TodoListSlice} from "./slices/TodoListSlice";
+import UIReducer from "./reducers/UIReducer";
 
 const store = configureStore({
     reducer: {
-        list: TodoListSlice.reducer
+        list: TodoListSlice.reducer,
+        ui: UIReducer
     }
 })
 

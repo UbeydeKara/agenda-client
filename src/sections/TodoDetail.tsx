@@ -6,9 +6,11 @@ import {selectTodo} from "../redux/slices/TodoListSlice";
 import {deleteTodoById, saveTodo, updateTodoAction} from "../redux/actions/ListActions";
 import Datepicker from "tailwind-datepicker-react"
 import {options} from "../constants/DatePickerOptions";
+import {toggleRightDrawer} from "../redux/actions/UIActions";
 
 function TodoDetail() {
     const {selectedTodo} = useAppSelector(x => x.list);
+    const {rightDrawerOpen} = useAppSelector(x => x.ui);
     const dispatch = useAppDispatch();
 
     const [open, setOpen] = useState(true);
@@ -36,7 +38,7 @@ function TodoDetail() {
     };
 
     const handleClose = () => {
-        dispatch(selectTodo(false));
+        dispatch(toggleRightDrawer(false));
     }
 
     // DatePicker
@@ -60,7 +62,7 @@ function TodoDetail() {
     }, [selectedTodo]);
 
     return(
-        <Drawer open={open} className="min-w-[300px] xl:min-w-[480px]">
+        <Drawer open={rightDrawerOpen} className="w-[350px] xl:w-[450px]">
             <Stack direction="row" spacing="auto" itemsCenter>
                 <Typography variant="h1" className="text-xl font-bold">
                     {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}
