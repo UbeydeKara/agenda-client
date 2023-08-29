@@ -25,7 +25,7 @@ function TodoList() {
                         Yapılacaklar
                     </Typography>
                     <Card className="px-3 py-1">
-                        <Typography variant="h6" className="text-4xl">
+                        <Typography variant="h5" className="text-4xl">
                             {todoList.length}
                         </Typography>
                     </Card>

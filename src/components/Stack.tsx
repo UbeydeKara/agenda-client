@@ -19,7 +19,7 @@ function Stack({children, direction, spacing, itemsCenter, justifyCenter, classN
         itemsCenter && "items-center",
         justifyCenter && "justify-center",
         className
-    ].join(" ").trim();
+    ].join(" ").replaceAll("false", '').replace(/\s+/g, ' ');
 
     return(
         <div className={classes} {...props}>

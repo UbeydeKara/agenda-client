@@ -20,13 +20,13 @@ function Drawer({children, direction = "right", open, className}: IModal) {
             return "";
 
         if (direction === "right")
-            return "translate-x-full !min-w-0 !w-0";
+            return "translate-x-full !min-w-0 !w-0 !px-0";
 
-        return "-translate-x-full !min-w-0 !w-0";
+        return "-translate-x-full !min-w-0 !w-0 !px-0";
     }, [open]);
 
     const classes = [
-        "h-screen p-8 rounded-xl overflow-y-auto transition-all duration-500 bg-gray-100 dark:bg-gray-800",
+        "h-screen p-8 rounded-xl transition-all duration-500 bg-gray-100 dark:bg-gray-800",
         animClass,
         className
     ].join(" ").trim();

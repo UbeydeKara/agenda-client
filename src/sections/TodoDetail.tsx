@@ -60,7 +60,7 @@ function TodoDetail() {
     }, [selectedTodo]);
 
     return(
-        <Drawer open={open} className="min-w-[480px]">
+        <Drawer open={open} className="min-w-[300px] xl:min-w-[480px]">
             <Stack direction="row" spacing="auto" itemsCenter>
                 <Typography variant="h1" className="text-xl font-bold">
                     {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}
@@ -71,7 +71,7 @@ function TodoDetail() {
                 </IconButton>
             </Stack>
 
-            <Form>
+            <Form className="flex h-full">
                 <TextField
                     name="title"
                     value={values.title || ""}
@@ -101,7 +101,7 @@ function TodoDetail() {
                     </Datepicker>
                 </Stack>
 
-                <Stack direction="row" spacing={3} itemsCenter>
+                <Stack direction="row" spacing={3} itemsCenter className="!mt-auto pb-4">
                     <Button variant="outlined" className="!bg-gray-100 w-full" onClick={handleDelete}>
                         {newRecord ? "İptal" : "Etkinliği sil"}
                     </Button>

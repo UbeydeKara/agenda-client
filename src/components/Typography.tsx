@@ -6,13 +6,21 @@ interface ITypography extends React.LabelHTMLAttributes<HTMLLabelElement> {
     className?: string;
 }
 
-Typography.defaultProps = {
-    className: "",
-    variant: "h1"
+const variantClasses = {
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "text-sm",
+    p: "",
+    span: "",
 }
 
-function Typography({children, variant = "h1", className} : ITypography) {
-    return React.createElement(variant, {className}, children);
+function Typography({children, variant = "h6", className = ""} : ITypography) {
+    return React.createElement(variant, {
+        className: [variantClasses[variant], className].join(" ").trim()
+}, children);
 }
 
 export default Typography;

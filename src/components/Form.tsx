@@ -6,8 +6,8 @@ interface IForm extends React.FormHTMLAttributes<HTMLFormElement> {
 
 function Form({...props} : IForm) {
     return(
-        <form>
-            <Stack spacing={4} className="my-4">
+        <form {...props}>
+            <Stack spacing={4} className="my-4 flex-grow">
                 {props.children}
             </Stack>
         </form>
