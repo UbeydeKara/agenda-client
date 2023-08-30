@@ -1,19 +1,23 @@
 import React from 'react';
 import {Stack} from "./components";
-import {Sidebar, TodoDetail, TodoList} from "./sections";
-import {Provider} from "react-redux";
-import store from "./redux/store";
+import {Sidebar, TodoList} from "./sections";
+import {Navigate, Outlet, Route, Routes} from "react-router-dom";
+
+function Layout() {
+    return (<Stack direction="row" className="overflow-hidden">
+            <Sidebar/>
+            <Outlet/>
+        </Stack>)
+}
 
 function App() {
-    return (
-        <Provider store={store}>
-            <Stack direction="row" className="overflow-hidden">
-                <Sidebar/>
-                <TodoList/>
-                <TodoDetail/>
-            </Stack>
-        </Provider>
-    );
+    return (<Routes>
+            <Route path="/" element={<Layout/>}>
+                <Route index element={<Navigate to="/list" replace/>}/>
+                <Route path="list" element={<TodoList/>}/>
+                <Route path="*" element={<></>}/>
+            </Route>
+        </Routes>);
 }
 
 export default App;

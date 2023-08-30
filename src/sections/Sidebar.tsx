@@ -3,6 +3,7 @@ import {Card, Drawer, IconButton, List, ListItem2, Stack, Typography} from "../c
 import {Bars3Icon, ChevronDoubleRightIcon, ListBulletIcon, PencilSquareIcon} from "@heroicons/react/20/solid";
 import {toggleLeftDrawer, toggleRightDrawer} from "../redux/actions/UIActions";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
+import {Link} from "react-router-dom";
 
 function Sidebar() {
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
@@ -22,21 +23,31 @@ function Sidebar() {
                         Menu
                     </Typography>
                     <List title="Etkinlikler" className="flex-grow">
-                        <ListItem2 className="text-gray-600 text-sm"
-                                   startIcon={<ChevronDoubleRightIcon className="h-5 w-5 text-gray-500"/>}
-                                   endIcon={<Card className="px-3 py-py">5</Card>}>
-                            Yaklaşan
-                        </ListItem2>
-                        <ListItem2 className="text-gray-600 text-sm"
-                                   startIcon={<ListBulletIcon className="h-4 w-5 text-gray-500"/>}
-                                   endIcon={<Card className="px-3 py-py">2</Card>}>
-                            Bugün
-                        </ListItem2>
-                        <ListItem2 className="text-gray-600 text-sm"
-                                   startIcon={<PencilSquareIcon className="h-4 w-5 text-gray-500"/>}
-                                   endIcon={<Card className="px-3 py-py">2</Card>}>
-                            Yapışkan Notlar
-                        </ListItem2>
+
+                        <Link to="/list">
+                            <ListItem2 className="text-gray-600 text-sm"
+                                       startIcon={<ChevronDoubleRightIcon className="h-5 w-5 text-gray-500"/>}
+                                       endIcon={<Card className="px-3 py-py">5</Card>}>
+                                Yaklaşan
+                            </ListItem2>
+                        </Link>
+
+                        <Link to="/list">
+                            <ListItem2 className="text-gray-600 text-sm"
+                                       startIcon={<ListBulletIcon className="h-4 w-5 text-gray-500"/>}
+                                       endIcon={<Card className="px-3 py-py">2</Card>}>
+                                Bugün
+                            </ListItem2>
+                        </Link>
+
+                        <Link to="/sticky-wall">
+                            <ListItem2 className="text-gray-600 text-sm"
+                                       startIcon={<PencilSquareIcon className="h-4 w-5 text-gray-500"/>}
+                                       endIcon={<Card className="px-3 py-py">2</Card>}>
+                                Yapışkan Notlar
+                            </ListItem2>
+                        </Link>
+
                     </List>
                 </Stack>
             </Drawer>

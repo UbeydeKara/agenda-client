@@ -7,13 +7,11 @@ interface IContainer {
 }
 
 function Container({className, ...props} : IContainer) {
-    const {leftDrawerOpen, rightDrawerOpen} = useAppSelector(x => x.ui);
+    const {leftDrawerOpen} = useAppSelector(x => x.ui);
 
     const classes = [
         "w-full px-4 sm:px-14 transition-all duration-700",
         leftDrawerOpen ? "md:pl-[330px]" : "sm:pl-14 md:pl-24 lg:pl-34 xl:pl-44",
-        rightDrawerOpen ? "lg:pr-[380px] xl:pr-[480px]" : "lg:pr-34 xl:pr-44",
-        leftDrawerOpen && !rightDrawerOpen ? "xl:!pr-14" : "",
         className
     ].join(" ").trim()
 

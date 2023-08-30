@@ -9,6 +9,7 @@ import {TodoDetail} from "./index";
 
 function TodoList() {
     const {todoList} = useAppSelector(x => x.list);
+    const {leftDrawerOpen, rightDrawerOpen} = useAppSelector(x => x.ui);
     const dispatch = useAppDispatch();
 
     const selectItem = (item: any) => {
@@ -16,13 +17,18 @@ function TodoList() {
         dispatch(toggleRightDrawer(true));
     };
 
+    const containerClass = [
+        rightDrawerOpen ? "lg:pr-[380px] xl:pr-[480px]" : "lg:pr-34 xl:pr-44",
+        leftDrawerOpen && !rightDrawerOpen ? "xl:!pr-14" : "",
+    ].join(" ").trim();
+
     useEffect(() => {
         dispatch(retrieveList());
     }, [dispatch]);
 
     return(
         <>
-            <Container>
+            <Container className={containerClass}>
                 <Stack justifyCenter spacing={10} className="h-screen">
                     <Stack direction="row" spacing={6}>
                         <Typography variant="h1" className="text-5xl font-bold">
