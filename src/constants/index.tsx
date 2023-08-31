@@ -1,3 +1,4 @@
 import {listColors} from "./ListColors";
+import {datePickerOptions} from "./DatePickerOptions";
 
-export {listColors}
+export {listColors, datePickerOptions}

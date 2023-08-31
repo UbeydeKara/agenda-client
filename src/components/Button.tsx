@@ -3,7 +3,7 @@ import {rippleEffect} from "../utils/Ripple";
 import Typography from "./Typography";
 
 
-interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "contained" | "outlined";
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;

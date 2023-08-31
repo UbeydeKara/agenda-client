@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {Button, Drawer, Form, IconButton, Stack, TextField, Typography} from "../components";
+import {Button, Drawer, Form, IconButton, Select, Stack, TextField, Typography} from "../components";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {ChevronDownIcon, XMarkIcon} from "@heroicons/react/20/solid";
 import {selectTodo} from "../redux/slices/TodoListSlice";
 import {deleteTodoById, saveTodo, updateTodoAction} from "../redux/actions/ListActions";
 import Datepicker from "tailwind-datepicker-react"
-import {options} from "../constants/DatePickerOptions";
 import {toggleRightDrawer} from "../redux/actions/UIActions";
+import {datePickerOptions} from "../constants";
 
 function TodoDetail() {
     const {selectedTodo} = useAppSelector(x => x.list);
     const {rightDrawerOpen} = useAppSelector(x => x.ui);
+    const categories = useAppSelector(x => x.category);
+
     const dispatch = useAppDispatch();
 
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -20,7 +22,13 @@ function TodoDetail() {
 
     // Drawer
     const handleSave = () => {
-        dispatch(newRecord ? saveTodo(values) : updateTodoAction(values));
+        let saveValues = {...values}
+
+        if (values.category) {
+            saveValues = {...saveValues, categoryId: values.category.categoryId}
+        }
+
+        dispatch(newRecord ? saveTodo(saveValues) : updateTodoAction(saveValues));
     }
 
     const handleDelete = () => {
@@ -33,6 +41,10 @@ function TodoDetail() {
     const handleChange = (event: any) => {
         const name = event.target.name;
         const value = event.target.value;
+        setValues({...values, [name]: value});
+    };
+
+    const handleSelectChange = (name: string, value: Object) => {
         setValues({...values, [name]: value});
     };
 
@@ -99,16 +111,34 @@ function TodoDetail() {
                     className="!bg-gray-100"
                     onChange={handleChange}/>
 
+                <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
+                    <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
+                        Liste
+                    </Typography>
+
+                    <Select options={categories} variant="outlined" className="!bg-gray-100 !px-1 !py-1"
+                            endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
+                            onClick={handlePickerOpen}
+                            handleChange={handleSelectChange}
+                            optionValue="category"
+                            optionLabel="name"
+                            optionIcon="colorCode">
+                        {values.category?.name || "Liste seçin"}
+                    </Select>
+
+
+                </Stack>
+
                 <Stack id="pickerContainer" direction="row" spacing={4} itemsCenter>
                     <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
                         Bitiş Tarihi
                     </Typography>
 
-                    <Datepicker options={options} onChange={dateChange} show={pickerOpen} setShow={handlePickerShow} classNames="!w-auto">
+                    <Datepicker options={datePickerOptions} onChange={dateChange} show={pickerOpen} setShow={handlePickerShow} classNames="!w-auto">
                         <Button variant="outlined" className="!bg-gray-100 !px-1 !py-1"
-                                endIcon={<ChevronDownIcon className="h-7 w-7 text-gray-500"/>}
+                                endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
                                 onClick={handlePickerOpen}>
-                            {values.dueAt ? new Date(values.dueAt).toLocaleDateString() : new Date().toLocaleDateString()}
+                            {values.dueAt ? new Date(values.dueAt).toLocaleDateString() : "Tarih seçin"}
                         </Button>
                     </Datepicker>
                 </Stack>
