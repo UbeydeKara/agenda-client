@@ -16,7 +16,7 @@ function TodoDetail() {
     const dispatch = useAppDispatch();
 
     const [pickerOpen, setPickerOpen] = useState(false);
-    const [values, setValues] = useState(selectedTodo);
+    const [values, setValues] = useState<any>({});
 
     const newRecord = Object.keys(selectedTodo).length === 0;
 

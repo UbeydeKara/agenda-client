@@ -24,7 +24,7 @@ export const saveTodo = (todo: TodoPayload) => async (dispatch: AppDispatch) => 
 
 export const updateTodoAction = (todo: TodoPayload) => async (dispatch: AppDispatch) => {
     try {
-        const res = await TodoService.save(todo);
+        const res = await TodoService.update(todo);
         dispatch(updateTodo(res.data))
         return Promise.resolve(res.data);
     } catch (err) {

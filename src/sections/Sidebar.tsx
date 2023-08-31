@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import ListCreator from "./ListCreator";
 
 function Sidebar() {
+    const {todoList} = useAppSelector(x => x.list);
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
     const categories = useAppSelector(x => x.category);
 
@@ -37,7 +38,7 @@ function Sidebar() {
                         <Link to="/list/upcoming">
                             <ListItem2 className="text-gray-600 text-sm"
                                        startIcon={<ChevronDoubleRightIcon className="h-5 w-5 text-gray-500"/>}
-                                       endIcon={<Card className="px-3 py-py">5</Card>}>
+                                       endIcon={<Card className="px-3 py-py">{todoList.length}</Card>}>
                                 Yaklaşan
                             </ListItem2>
                         </Link>
