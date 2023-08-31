@@ -7,7 +7,10 @@ import {routeClass, routes} from "./index";
 
 function Layout() {
     const location = useLocation()
+    const pathKey = location.pathname === "/sticky-wall" ? 0 : 1;
+
     const currentOutlet = useOutlet()
+
     const { nodeRef } : any =
     routes.find((route) => route.path === location.pathname) ?? {}
 
@@ -16,7 +19,7 @@ function Layout() {
             <Sidebar/>
             <SwitchTransition>
                 <CSSTransition
-                    key={location.pathname}
+                    key={pathKey}
                     nodeRef={nodeRef}
                     timeout={500}
                     classNames={routeClass}

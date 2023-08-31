@@ -5,8 +5,8 @@ import {TodoList} from "../sections";
 import {StickyWall} from "../pages";
 
 export const routes = [
-    { path: '/list', name: 'List', element: <TodoList />, nodeRef: createRef() },
-    { path: '/sticky-wall', name: 'Wall', element: <StickyWall />, nodeRef: createRef() }
+    { key: "list", path: '/list/:range', name: 'List', element: <TodoList />, nodeRef: createRef() },
+    { key: "wall", path: '/sticky-wall', name: 'Wall', element: <StickyWall />, nodeRef: createRef() }
 ]
 
 export const router = createBrowserRouter([

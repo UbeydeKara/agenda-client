@@ -6,11 +6,17 @@ import {selectTodo} from "../redux/slices/TodoListSlice";
 import {PlusIcon} from "@heroicons/react/20/solid";
 import {toggleRightDrawer} from "../redux/actions/UIActions";
 import {TodoDetail} from "../sections";
+import {useLocation, useNavigate} from "react-router-dom";
+
+const ranges = {upcoming: "/list/upcoming", today: "/list/today"};
 
 function TodoList() {
     const {todoList} = useAppSelector(x => x.list);
     const {leftDrawerOpen, rightDrawerOpen} = useAppSelector(x => x.ui);
     const dispatch = useAppDispatch();
+
+    const pathname = useLocation().pathname;
+    const navigate = useNavigate();
 
     const selectItem = (item: any) => {
         dispatch(selectTodo(item));
@@ -23,7 +29,12 @@ function TodoList() {
     ].join(" ").trim();
 
     useEffect(() => {
-        dispatch(retrieveList());
+        if (pathname === ranges.upcoming)
+            dispatch(retrieveList());
+        else if (pathname === ranges.today)
+            dispatch(retrieveList());
+        else
+            navigate("/404")
     }, [dispatch]);
 
     return(
