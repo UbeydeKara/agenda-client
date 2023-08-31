@@ -7,7 +7,7 @@ export const options = {
         clearBtn: "",
         icons: "",
         text: "",
-        disabledText: "bg-gray-100",
+        disabledText: "",
         input: "",
         inputIcon: "",
         selected: "bg-primary-500",

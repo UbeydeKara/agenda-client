@@ -13,7 +13,6 @@ function TodoDetail() {
     const {rightDrawerOpen} = useAppSelector(x => x.ui);
     const dispatch = useAppDispatch();
 
-    const [open, setOpen] = useState(true);
     const [pickerOpen, setPickerOpen] = useState(false);
     const [values, setValues] = useState(selectedTodo);
 
@@ -44,7 +43,6 @@ function TodoDetail() {
     // DatePicker
     const dateChange = (date: Date) => {
         setValues({...values, dueAt: date});
-        setPickerOpen(false);
     };
 
     const handlePickerShow = (state: boolean) => {
@@ -58,8 +56,20 @@ function TodoDetail() {
     // useEffect
     useEffect(() => {
         setValues(selectedTodo);
-        setOpen(Boolean(selectedTodo));
     }, [selectedTodo]);
+
+    // fix auto hide datepicker
+    useEffect(() => {
+        window.addEventListener('click', (e: Event) => {
+            const target = e.target as HTMLElement;
+
+            if (document.getElementById("pickerContainer")?.contains(target)) {
+                return;
+            }
+
+            setPickerOpen(false);
+        })
+    }, [setPickerOpen]);
 
     return(
         <Drawer open={rightDrawerOpen} className="w-[350px] xl:w-[450px]">
@@ -89,7 +99,7 @@ function TodoDetail() {
                     className="!bg-gray-100"
                     onChange={handleChange}/>
 
-                <Stack direction="row" spacing={4} itemsCenter>
+                <Stack id="pickerContainer" direction="row" spacing={4} itemsCenter>
                     <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
                         Bitiş Tarihi
                     </Typography>

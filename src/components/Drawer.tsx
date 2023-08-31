@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 
-interface IModal {
+interface IDrawer extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     direction?: "right" | "left",
     open: boolean;
@@ -12,7 +12,7 @@ const directionClass = {
     right: "right-0"
 }
 
-function Drawer({children, direction = "right", open, className}: IModal) {
+function Drawer({children, direction = "right", open, className}: IDrawer) {
 
     const animClass = useMemo(() => {
         if (open)

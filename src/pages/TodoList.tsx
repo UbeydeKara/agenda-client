@@ -5,7 +5,7 @@ import {retrieveList} from "../redux/actions/ListActions";
 import {selectTodo} from "../redux/slices/TodoListSlice";
 import {PlusIcon} from "@heroicons/react/20/solid";
 import {toggleRightDrawer} from "../redux/actions/UIActions";
-import {TodoDetail} from "./index";
+import {TodoDetail} from "../sections";
 
 function TodoList() {
     const {todoList} = useAppSelector(x => x.list);
