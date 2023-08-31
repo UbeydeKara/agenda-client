@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {rippleEffect} from "../utils/Ripple";
-import {updateTodoAction} from "../redux/actions/ListActions";
+import {updateTodoAction} from "../redux/actions/TodoAction";
 import {useAppDispatch} from "../redux/hooks";
 import Stack from "./Stack";
 import {Card, ListItem2} from "./index";

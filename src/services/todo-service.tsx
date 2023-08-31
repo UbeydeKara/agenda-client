@@ -8,12 +8,17 @@ export interface TodoPayload {
     description: string;
     isDone: boolean;
     dueAt: Date;
+    category: Object;
     createdAt: Date;
     modifiedAt: Date;
 }
 
 const findAll = () => {
     return http.get(serviceUrl);
+};
+
+const getAllByDate = () => {
+    return http.get(serviceUrl + "/byDate");
 };
 
 const save = (todo: object) => {
@@ -30,6 +35,7 @@ const deleteById = (todoId: string) => {
 
 const TodoService = {
     findAll,
+    getAllByDate,
     save,
     update,
     deleteById

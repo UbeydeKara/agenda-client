@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, Drawer, Form, IconButton, Select, Stack, TextField, Typography} from "../components";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {ChevronDownIcon, XMarkIcon} from "@heroicons/react/20/solid";
-import {selectTodo} from "../redux/slices/TodoListSlice";
-import {deleteTodoById, saveTodo, updateTodoAction} from "../redux/actions/ListActions";
+import {deleteTodoById, saveTodo, selectTodo, updateTodoAction} from "../redux/actions/TodoAction";
 import Datepicker from "tailwind-datepicker-react"
 import {toggleRightDrawer} from "../redux/actions/UIActions";
 import {datePickerOptions} from "../constants";
@@ -111,23 +110,23 @@ function TodoDetail() {
                     className="!bg-gray-100"
                     onChange={handleChange}/>
 
-                <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
-                    <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
-                        Liste
-                    </Typography>
+                {categories.length > 0 &&
+                    <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
+                        <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
+                            Liste
+                        </Typography>
 
-                    <Select options={categories} variant="outlined" className="!bg-gray-100 !px-1 !py-1"
-                            endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
-                            onClick={handlePickerOpen}
-                            handleChange={handleSelectChange}
-                            optionValue="category"
-                            optionLabel="name"
-                            optionIcon="colorCode">
-                        {values.category?.name || "Liste seçin"}
-                    </Select>
-
-
-                </Stack>
+                        <Select options={categories} variant="outlined" className="!bg-gray-100 !px-1 !py-1"
+                                endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
+                                onClick={handlePickerOpen}
+                                handleChange={handleSelectChange}
+                                optionValue="category"
+                                optionLabel="name"
+                                optionIcon="colorCode">
+                            {values.category?.name || "Liste seçin"}
+                        </Select>
+                    </Stack>
+                }
 
                 <Stack id="pickerContainer" direction="row" spacing={4} itemsCenter>
                     <Typography variant="span" className="text-[15px] text-gray-600 mb-1">

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Card, Drawer, IconButton, List, ListItem2, Stack, Typography} from "../components";
 import {
     Bars3Icon,
@@ -8,11 +8,22 @@ import {
 } from "@heroicons/react/20/solid";
 import {toggleLeftDrawer} from "../redux/actions/UIActions";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import ListCreator from "./ListCreator";
+import {routeRanges} from "../constants";
+
+const item = (isActive = false, to: string, title: string, icon: any, count: number) => (
+    <Link to={to}>
+        <ListItem2 key={to} className={`${isActive ? "bg-gray-200" : "bg-gray-100"} text-gray-600 text-sm rounded`}
+                   startIcon={icon}
+                   endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">{count}</Card>}>
+            {title}
+        </ListItem2>
+    </Link>
+)
 
 function Sidebar() {
-    const {todoList} = useAppSelector(x => x.list);
+    const {todoList, todoListByDate} = useAppSelector(x => x.list);
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
     const categories = useAppSelector(x => x.category);
 
@@ -20,7 +31,32 @@ function Sidebar() {
 
     const dispatch = useAppDispatch();
 
+    const {range} = useParams();
+    const currentRangeUrl = routeRanges[range as keyof typeof routeRanges].url;
+
     const classes = leftDrawerOpen ? " translate-x-52" : ""
+
+    const bars = useMemo(() => (
+        [
+            {
+                to: "/list/upcoming",
+                title: "Yaklaşan",
+                icon: <ChevronDoubleRightIcon className="h-5 w-5 text-gray-500"/>,
+                count: todoList.length
+            },
+            {
+                to: "/list/today",
+                title: "Bugün",
+                icon: <ListBulletIcon className="h-4 w-5 text-gray-500"/>,
+                count: todoListByDate.today.length
+            },
+            // {
+            //     to: "/sticky-wall",
+            //     title: "Yapışkan Notlar",
+            //     icon: <PencilSquareIcon className="h-4 w-5 text-gray-500"/>
+            // },
+        ]
+    ), [todoList.length, todoListByDate.today.length]);
 
     const handleToggle = () => {
         dispatch(toggleLeftDrawer(!leftDrawerOpen));
@@ -34,31 +70,9 @@ function Sidebar() {
                         Menu
                     </Typography>
                     <List title="Etkinlikler">
-
-                        <Link to="/list/upcoming">
-                            <ListItem2 className="text-gray-600 text-sm"
-                                       startIcon={<ChevronDoubleRightIcon className="h-5 w-5 text-gray-500"/>}
-                                       endIcon={<Card className="px-3 py-py">{todoList.length}</Card>}>
-                                Yaklaşan
-                            </ListItem2>
-                        </Link>
-
-                        <Link to="/list/today">
-                            <ListItem2 className="text-gray-600 text-sm"
-                                       startIcon={<ListBulletIcon className="h-4 w-5 text-gray-500"/>}
-                                       endIcon={<Card className="px-3 py-py">2</Card>}>
-                                Bugün
-                            </ListItem2>
-                        </Link>
-
-                        <Link to="/sticky-wall">
-                            <ListItem2 className="text-gray-600 text-sm"
-                                       startIcon={<PencilSquareIcon className="h-4 w-5 text-gray-500"/>}
-                                       endIcon={<Card className="px-3 py-py">2</Card>}>
-                                Yapışkan Notlar
-                            </ListItem2>
-                        </Link>
-
+                        {bars.map(x => (
+                            item(x.to === currentRangeUrl, x.to, x.title, x.icon, x.count)
+                        ))}
                     </List>
 
                     <List title="Listeler">
@@ -69,7 +83,7 @@ function Sidebar() {
                                 startIcon={
                                     <div className={`h-4 w-4 ${item.colorCode} rounded`}/>
                                 }
-                                endIcon={<Card className="px-3 py-py bg-gray-200 font-bold text-xs">5</Card>}>
+                                endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">5</Card>}>
                                     {item.name}
                             </ListItem2>
                         ))}

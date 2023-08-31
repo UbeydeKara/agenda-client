@@ -1,41 +1,33 @@
 import {Button, Card, Container, List, ListItem, Stack, Typography} from "../components";
-import React, {useEffect} from "react";
+import React from "react";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {retrieveList} from "../redux/actions/ListActions";
-import {selectTodo} from "../redux/slices/TodoListSlice";
+import {selectTodo} from "../redux/actions/TodoAction";
 import {PlusIcon} from "@heroicons/react/20/solid";
 import {toggleRightDrawer} from "../redux/actions/UIActions";
 import {TodoDetail} from "../sections";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {routeRanges} from "../constants";
 
-const ranges = {upcoming: "/list/upcoming", today: "/list/today"};
 
 function TodoList() {
-    const {todoList} = useAppSelector(x => x.list);
+    const {todoList, todoListByDate} = useAppSelector(x => x.list);
     const {leftDrawerOpen, rightDrawerOpen} = useAppSelector(x => x.ui);
     const dispatch = useAppDispatch();
 
-    const pathname = useLocation().pathname;
-    const navigate = useNavigate();
+    const {range} = useParams();
+    const currentRange = routeRanges[range as keyof typeof routeRanges] || {};
 
-    const selectItem = (item: any) => {
-        dispatch(selectTodo(item));
-        dispatch(toggleRightDrawer(true));
-    };
+    const data = currentRange.key === "today" ? todoListByDate.today : todoList;
 
     const containerClass = [
         rightDrawerOpen ? "lg:pr-[380px] xl:pr-[480px]" : "lg:pr-34 xl:pr-44",
         leftDrawerOpen && !rightDrawerOpen ? "xl:!pr-14" : "",
     ].join(" ").trim();
 
-    useEffect(() => {
-        if (pathname === ranges.upcoming)
-            dispatch(retrieveList());
-        else if (pathname === ranges.today)
-            dispatch(retrieveList());
-        else
-            navigate("/404")
-    }, [dispatch]);
+    const selectItem = (item: any) => {
+        dispatch(selectTodo(item));
+        dispatch(toggleRightDrawer(true));
+    };
 
     return(
         <>
@@ -43,11 +35,11 @@ function TodoList() {
                 <Stack justifyCenter spacing={10} className="h-screen">
                     <Stack direction="row" spacing={6}>
                         <Typography variant="h1" className="text-5xl font-bold">
-                            Yapılacaklar
+                            {currentRange.title}
                         </Typography>
                         <Card className="px-3 py-1">
                             <Typography variant="h5" className="text-4xl">
-                                {todoList.length}
+                                {data.length}
                             </Typography>
                         </Card>
                     </Stack>
@@ -61,7 +53,7 @@ function TodoList() {
                         </Button>
 
                         <List>
-                            {Object.values(todoList).map(item => (
+                            {Object.values(data).map((item: any) => (
                                 <ListItem key={item.todoId} onClick={() => selectItem(item)}>{item}</ListItem>
                             ))}
                         </List>

@@ -1,9 +1,11 @@
+import {routeRanges} from "../constants";
+
 const background = {
     light: "#EEEEEECC",
     dark: "#ffc7c7cc"
 }
 
-export function rippleEffect(event, theme = "light") {
+export function rippleEffect(event: any, theme = "light") {
     const btn = event.target;
 
     // create circle span
@@ -24,7 +26,7 @@ export function rippleEffect(event, theme = "light") {
     circle.style.top = `${localY}px`;
 
     // add bg
-    circle.style.backgroundColor = background[theme];
+    circle.style.backgroundColor = background[theme as keyof typeof background];
 
     // add ripple class for animation
     circle.classList.add("ripple");
