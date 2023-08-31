@@ -1,10 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {TodoListSlice} from "./slices/TodoListSlice";
 import UIReducer from "./reducers/UIReducer";
+import CategoryReducer from "./reducers/CategoryReducer";
 
 const store = configureStore({
     reducer: {
         list: TodoListSlice.reducer,
+        category: CategoryReducer,
         ui: UIReducer
     }
 })

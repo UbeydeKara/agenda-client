@@ -33,10 +33,23 @@ module.exports = {
         '900': '#841818',
         '950': '#480707',
       },
+      list: {
+        "red": "#FF6B6B",
+        "pink": "#DA77F2",
+        "purple": "#9775FA",
+        "blue": "#5C7CFA",
+        "cyan": "#66D9E8",
+        "green": "#8CE99A",
+        "yellow": "#FFD43B",
+        "orange": "#FF922B"
+      },
       ...colors
     },
     container: {
       center: true, // alternative mx-auto
+    },
+    transitionDuration: {
+      DEFAULT: '500ms'
     },
     extend: {
       // override default font
