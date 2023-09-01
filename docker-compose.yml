@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   agenda-app:
+    image: ubeydekara/agenda-app:latest
+    container_name: agenda-app
     build: .
     ports:
-      - "3000:3000"
+      - "80:3000"
