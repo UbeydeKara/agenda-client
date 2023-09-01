@@ -4,6 +4,7 @@ import {router} from "./route";
 import {useAppDispatch} from "./redux/hooks";
 import {retrieveCategories} from "./redux/actions/CategoryAction";
 import {retrieveList, retrieveListByDate} from "./redux/actions/TodoAction";
+import {retrieveStickies} from "./redux/actions/StickyAction";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         Promise.allSettled([
             dispatch(retrieveList()),
             dispatch(retrieveListByDate()),
+            dispatch(retrieveStickies()),
             dispatch(retrieveCategories())
         ]);
     }, [dispatch]);

@@ -6,6 +6,11 @@ export const UPDATE_TODO = "UPDATE_TODO";
 export const DELETE_TODO = "DELETE_TODO";
 export const SELECT_TODO = "SELECT_TODO";
 
+// sticky
+export const RETRIEVE_STICKIES = "RETRIEVE_STICKIES";
+export const SAVE_STICKY = "SAVE_STICKY";
+export const DELETE_STICKY = "DELETE_STICKY";
+
 // category
 export const RETRIEVE_CATEGORIES = "RETRIEVE_CATEGORIES";
 export const SAVE_CATEGORY = "SAVE_CATEGORY";

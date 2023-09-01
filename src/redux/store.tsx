@@ -2,11 +2,13 @@ import {configureStore} from "@reduxjs/toolkit";
 import UIReducer from "./reducers/UIReducer";
 import CategoryReducer from "./reducers/CategoryReducer";
 import TodoReducer from "./reducers/TodoReducer";
+import StickyReducer from "./reducers/StickyReducer";
 
 const store = configureStore({
     reducer: {
         list: TodoReducer,
         category: CategoryReducer,
+        sticky: StickyReducer,
         ui: UIReducer
     }
 })

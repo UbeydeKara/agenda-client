@@ -9,7 +9,7 @@ export const routeRanges = {
         title: "Bugün",
         url: "/list/today"
     },
-    stickyWall: {
+    "sticky-wall": {
         key: "sticky-wall",
         title: "Yapışkan Notlar",
         url: "/sticky-wall"

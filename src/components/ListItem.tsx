@@ -4,7 +4,6 @@ import {rippleEffect} from "../utils/Ripple";
 import {updateTodoAction} from "../redux/actions/TodoAction";
 import {useAppDispatch} from "../redux/hooks";
 import Stack from "./Stack";
-import {Card, ListItem2} from "./index";
 
 interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: any;

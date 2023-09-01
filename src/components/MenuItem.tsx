@@ -1,12 +1,12 @@
 import React from "react";
 import {rippleEffect} from "../utils/Ripple";
 
-interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IMenuItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
 }
 
-function ListItem2({startIcon, endIcon, ...props}: IListItem) {
+function MenuItem({startIcon, endIcon, ...props}: IMenuItem) {
     const content = props.children;
 
     const classes = [
@@ -25,4 +25,4 @@ function ListItem2({startIcon, endIcon, ...props}: IListItem) {
     )
 }
 
-export default ListItem2;
+export default MenuItem;

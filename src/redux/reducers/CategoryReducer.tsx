@@ -2,7 +2,7 @@ import {RETRIEVE_CATEGORIES, SAVE_CATEGORY} from "../types";
 
 const initialState: any = [];
 
-function UIReducer(state = initialState, action: any) {
+function CategoryReducer(state = initialState, action: any) {
     const { type, payload } = action;
 
     switch (type) {
@@ -15,4 +15,4 @@ function UIReducer(state = initialState, action: any) {
     }
 }
 
-export default UIReducer;
+export default CategoryReducer;

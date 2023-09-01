@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import {Card, Drawer, IconButton, List, ListItem2, Stack, Typography} from "../components";
+import {Card, Drawer, IconButton, List, MenuItem, Stack, Typography} from "../components";
 import {
     Bars3Icon,
     ChevronDoubleRightIcon,
@@ -14,16 +14,17 @@ import {routeRanges} from "../constants";
 
 const item = (isActive = false, to: string, title: string, icon: any, count: number) => (
     <Link to={to}>
-        <ListItem2 key={to} className={`${isActive ? "bg-gray-200" : "bg-gray-100"} text-gray-600 text-sm rounded`}
-                   startIcon={icon}
-                   endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">{count}</Card>}>
+        <MenuItem key={to} className={`${isActive ? "bg-gray-200" : "bg-gray-100"} text-gray-600 text-sm rounded`}
+                  startIcon={icon}
+                  endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">{count}</Card>}>
             {title}
-        </ListItem2>
+        </MenuItem>
     </Link>
 )
 
 function Sidebar() {
     const {todoList, todoListByDate} = useAppSelector(x => x.list);
+    const stickyNotes = useAppSelector(x => x.sticky);
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
     const categories = useAppSelector(x => x.category);
 
@@ -32,7 +33,7 @@ function Sidebar() {
     const dispatch = useAppDispatch();
 
     const {range} = useParams();
-    const currentRangeUrl = routeRanges[range as keyof typeof routeRanges].url;
+    const currentRangeUrl = routeRanges[range as keyof typeof routeRanges || "sticky-wall"]?.url;
 
     const classes = leftDrawerOpen ? " translate-x-52" : ""
 
@@ -50,11 +51,12 @@ function Sidebar() {
                 icon: <ListBulletIcon className="h-4 w-5 text-gray-500"/>,
                 count: todoListByDate.today.length
             },
-            // {
-            //     to: "/sticky-wall",
-            //     title: "Yapışkan Notlar",
-            //     icon: <PencilSquareIcon className="h-4 w-5 text-gray-500"/>
-            // },
+            {
+                to: "/sticky-wall",
+                title: "Yapışkan Notlar",
+                icon: <PencilSquareIcon className="h-4 w-5 text-gray-500"/>,
+                count: stickyNotes.length
+            },
         ]
     ), [todoList.length, todoListByDate.today.length]);
 
@@ -77,7 +79,7 @@ function Sidebar() {
 
                     <List title="Listeler">
                         {categories?.map((item: any, index: number) => (
-                            <ListItem2
+                            <MenuItem
                                 key={index}
                                 className="text-gray-600 text-sm"
                                 startIcon={
@@ -85,13 +87,13 @@ function Sidebar() {
                                 }
                                 endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">5</Card>}>
                                     {item.name}
-                            </ListItem2>
+                            </MenuItem>
                         ))}
 
-                        <ListItem2 className="text-gray-600 text-sm" onClick={() => setListOpen(true)}
-                                      startIcon={<PlusIcon className="h-5 w-5 text-gray-500"/>}>
+                        <MenuItem className="text-gray-600 text-sm" onClick={() => setListOpen(true)}
+                                  startIcon={<PlusIcon className="h-5 w-5 text-gray-500"/>}>
                         Yeni Liste Ekle
-                        </ListItem2>
+                        </MenuItem>
 
                         {/* List creator menu */}
                         <ListCreator open={listMenuOpen} setOpen={setListOpen}/>

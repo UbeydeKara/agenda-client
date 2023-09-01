@@ -2,7 +2,7 @@ import {TOGGLE_LEFT_DRAWER, TOGGLE_RIGHT_DRAWER} from "../types";
 
 const initialState = {
     leftDrawerOpen: true,
-    rightDrawerOpen: true
+    rightDrawerOpen: false
 };
 
 function UIReducer(state = initialState, action: any) {
