@@ -8,7 +8,8 @@ export interface TodoPayload {
     description: string;
     isDone: boolean;
     dueAt: Date;
-    category: Object;
+    category: any;
+    categoryId: string;
     createdAt: Date;
     modifiedAt: Date;
 }

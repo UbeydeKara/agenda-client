@@ -21,13 +21,7 @@ function TodoDetail() {
 
     // Drawer
     const handleSave = () => {
-        let saveValues = {...values}
-
-        if (values.category) {
-            saveValues = {...saveValues, categoryId: values.category.categoryId}
-        }
-
-        dispatch(newRecord ? saveTodo(saveValues) : updateTodoAction(saveValues));
+        dispatch(newRecord ? saveTodo(values) : updateTodoAction(values));
     }
 
     const handleDelete = () => {
