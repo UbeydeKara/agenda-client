@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import Button, {IButton} from "./Button";
 import {MenuItem} from "./index";
 import Fade from "../transitions/Fade";
+import {clickAway} from "../utils";
+import {Controller, useFormContext} from "react-hook-form";
 
 
-interface ISelect extends React.ButtonHTMLAttributes<HTMLButtonElement>, IButton {
+interface ISelect extends IButton {
     options: Array<any>;
     handleChange: Function;
     optionLabel: string;
@@ -14,6 +16,7 @@ interface ISelect extends React.ButtonHTMLAttributes<HTMLButtonElement>, IButton
 
 function Select({options, handleChange, optionLabel, optionValue, optionIcon, ...props} : ISelect) {
     const [open, setOpen] = useState(false);
+    const { control } = useFormContext();
 
     const handleOpen = () => {
         setOpen(true);
@@ -25,20 +28,18 @@ function Select({options, handleChange, optionLabel, optionValue, optionIcon, ..
     }
 
     useEffect(() => {
-        window.addEventListener('click', (e: Event) => {
-            const target = e.target as HTMLElement;
-
-            if (document.getElementById("menu-container")?.contains(target)) {
-                return;
-            }
-
-            setOpen(false);
-        })
+        clickAway("menu-container", () => setOpen(false))
     }, [setOpen]);
 
     return(
         <div id="menu-container">
-            <Button {...props} onClick={handleOpen}/>
+            <Controller
+                name={optionValue}
+                control={control}
+                render={({field}) => (
+                    <Button {...props} onClick={handleOpen}>
+                        {field.value?.name || props.children}
+                    </Button>)}/>
             <Fade open={open}>
                 <div id="dropdown-states" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="states-button">

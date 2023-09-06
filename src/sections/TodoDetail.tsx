@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {Button, Drawer, Form, IconButton, Select, Stack, TextField, Typography} from "../components";
+import React, {useEffect} from "react";
+import {Button, DateField, Drawer, Form, IconButton, Select, Stack, TextField, Typography} from "../components";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {ChevronDownIcon, XMarkIcon} from "@heroicons/react/20/solid";
 import {deleteTodoById, saveTodo, selectTodo, updateTodoAction} from "../redux/actions/TodoAction";
-import Datepicker from "tailwind-datepicker-react"
 import {toggleRightDrawer} from "../redux/actions/UIActions";
-import {datePickerOptions} from "../constants";
+import {detailFormSchema, detailInitialValues} from "../constants";
+import {TodoPayload} from "../services/todo-service";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 function TodoDetail() {
     const {selectedTodo} = useAppSelector(x => x.list);
@@ -14,73 +16,45 @@ function TodoDetail() {
 
     const dispatch = useAppDispatch();
 
-    const [pickerOpen, setPickerOpen] = useState(false);
-    const [values, setValues] = useState<any>({});
-
     const newRecord = Object.keys(selectedTodo).length === 0;
 
+    const methods = useForm({
+        resolver: yupResolver(detailFormSchema),
+        defaultValues: detailInitialValues,
+        mode: "all"
+    });
+    const {
+        reset,
+        getValues,
+        setValue
+    } = methods;
+
     // Drawer
-    const handleSave = () => {
+    const handleSave = (values: TodoPayload) => {
         dispatch(newRecord ? saveTodo(values) : updateTodoAction(values));
     }
 
     const handleDelete = () => {
         if (!newRecord)
-            dispatch(deleteTodoById(values.todoId));
+            dispatch(deleteTodoById(selectedTodo.todoId));
 
         dispatch(selectTodo({}));
     }
-
-    const handleChange = (event: any) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setValues({...values, [name]: value});
-    };
-
-    const handleSelectChange = (name: string, value: Object) => {
-        setValues({...values, [name]: value});
-    };
 
     const handleClose = () => {
         dispatch(toggleRightDrawer(false));
     }
 
-    // DatePicker
-    const dateChange = (date: Date) => {
-        setValues({...values, dueAt: date});
-    };
-
-    const handlePickerShow = (state: boolean) => {
-        setPickerOpen(state);
-    }
-
-    const handlePickerOpen = () => {
-        setPickerOpen(true);
-    }
-
-    // useEffect
+    // reset form
     useEffect(() => {
-        setValues(selectedTodo);
+        reset(selectedTodo);
     }, [selectedTodo]);
-
-    // fix auto hide datepicker
-    useEffect(() => {
-        window.addEventListener('click', (e: Event) => {
-            const target = e.target as HTMLElement;
-
-            if (document.getElementById("pickerContainer")?.contains(target)) {
-                return;
-            }
-
-            setPickerOpen(false);
-        })
-    }, [setPickerOpen]);
 
     return(
         <Drawer open={rightDrawerOpen} className="w-[350px] xl:w-[450px]">
             <Stack direction="row" spacing="auto" itemsCenter>
                 <Typography variant="h1" className="text-xl font-bold">
-                    {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + values.title}
+                    {newRecord ? "Yeni Etkinlik" : "Etkinlik: " + getValues("title")}
                 </Typography>
 
                 <IconButton onClick={handleClose}>
@@ -88,21 +62,21 @@ function TodoDetail() {
                 </IconButton>
             </Stack>
 
-            <Form className="flex h-full">
+            <Form
+                className="flex h-full"
+                methods={methods}
+                onSave={handleSave}>
+
                 <TextField
                     name="title"
-                    value={values.title || ""}
                     placeholder="Başlık"
-                    className="!bg-gray-100"
-                    onChange={handleChange}/>
+                    className="!bg-gray-100"/>
 
                 <TextField
                     name="description"
-                    value={values.description || ""}
                     placeholder="Açıklama"
                     rows={6}
-                    className="!bg-gray-100"
-                    onChange={handleChange}/>
+                    className="!bg-gray-100"/>
 
                 {categories.length > 0 &&
                     <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
@@ -110,37 +84,32 @@ function TodoDetail() {
                             Liste
                         </Typography>
 
-                        <Select options={categories} variant="outlined" className="!bg-gray-100 !px-1 !py-1"
+                        <Select options={categories}
+                                handleChange={setValue}
+                                variant="outlined"
+                                className="!bg-gray-100 !px-1 !py-1"
                                 endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
-                                onClick={handlePickerOpen}
-                                handleChange={handleSelectChange}
                                 optionValue="category"
                                 optionLabel="name"
                                 optionIcon="colorCode">
-                            {values.category?.name || "Liste seçin"}
+                            Liste Seçiniz
                         </Select>
                     </Stack>
                 }
 
-                <Stack id="pickerContainer" direction="row" spacing={4} itemsCenter>
-                    <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
+                <Stack id="pickerContainer" direction="row" spacing={4}>
+                    <Typography variant="span" className="text-[15px] text-gray-600 mt-[7px]">
                         Bitiş Tarihi
                     </Typography>
 
-                    <Datepicker options={datePickerOptions} onChange={dateChange} show={pickerOpen} setShow={handlePickerShow} classNames="!w-auto">
-                        <Button variant="outlined" className="!bg-gray-100 !px-1 !py-1"
-                                endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
-                                onClick={handlePickerOpen}>
-                            {values.dueAt ? new Date(values.dueAt).toLocaleDateString() : "Tarih seçin"}
-                        </Button>
-                    </Datepicker>
+                    <DateField fieldName="dueAt"/>
                 </Stack>
 
                 <Stack direction="row" spacing={3} itemsCenter className="!mt-auto pb-4">
                     <Button variant="outlined" className="!bg-gray-100 w-full" onClick={handleDelete}>
                         {newRecord ? "İptal" : "Etkinliği sil"}
                     </Button>
-                    <Button className="w-full" onClick={handleSave}>
+                    <Button type="submit" className="w-full">
                         {newRecord ? "Oluştur" : "Değişikliği kaydet"}
                     </Button>
                 </Stack>

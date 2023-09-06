@@ -1,11 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Card, Drawer, IconButton, List, MenuItem, Stack, Typography} from "../components";
-import {
-    Bars3Icon,
-    ChevronDoubleRightIcon,
-    ListBulletIcon,
-    PencilSquareIcon, PlusIcon
-} from "@heroicons/react/20/solid";
+import {Bars3Icon, ChevronDoubleRightIcon, ListBulletIcon, PencilSquareIcon, PlusIcon} from "@heroicons/react/20/solid";
 import {toggleLeftDrawer} from "../redux/actions/UIActions";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {Link, useParams} from "react-router-dom";
@@ -14,7 +9,7 @@ import {routeRanges} from "../constants";
 import {clickAway} from "../utils";
 
 const item = (isActive = false, to: string, title: string, icon: any, count: number) => (
-    <Link to={to}>
+    <Link key={to} to={to}>
         <MenuItem key={to} className={`${isActive ? "bg-gray-200" : "bg-gray-100"} text-gray-600 text-sm rounded`}
                   startIcon={icon}
                   endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">{count}</Card>}>
@@ -22,16 +17,22 @@ const item = (isActive = false, to: string, title: string, icon: any, count: num
         </MenuItem>
     </Link>
 )
+
 function Sidebar() {
     const {todoList, todoListByDate} = useAppSelector(x => x.list);
     const stickyNotes = useAppSelector(x => x.sticky);
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
     const categories = useAppSelector(x => x.category);
+
     const [listMenuOpen, setListOpen] = useState(false);
+
     const dispatch = useAppDispatch();
+
     const {range} = useParams();
     const currentRangeUrl = routeRanges[range as keyof typeof routeRanges || "sticky-wall"]?.url;
+
     const classes = leftDrawerOpen ? " translate-x-52" : ""
+
     const bars = useMemo(() => (
         [
             {
@@ -54,6 +55,7 @@ function Sidebar() {
             },
         ]
     ), [todoList.length, todoListByDate.today.length]);
+
     const handleToggle = () => {
         dispatch(toggleLeftDrawer(!leftDrawerOpen));
     }
@@ -74,6 +76,7 @@ function Sidebar() {
                             item(x.to === currentRangeUrl, x.to, x.title, x.icon, x.count)
                         ))}
                     </List>
+
                     <List title="Listeler">
                         {categories?.map((item: any, index: number) => (
                             <MenuItem
@@ -83,7 +86,7 @@ function Sidebar() {
                                     <div className={`h-4 w-4 ${item.colorCode} rounded`}/>
                                 }
                                 endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">5</Card>}>
-                                {item.name}
+                                    {item.name}
                             </MenuItem>
                         ))}
 
@@ -100,6 +103,7 @@ function Sidebar() {
                     </List>
                 </Stack>
             </Drawer>
+
             {/* Toggle menu */}
             <div className={"absolute top-7 left-7 z-10 transition-all duration-700" + classes}>
                 <IconButton onClick={handleToggle}>
@@ -109,4 +113,5 @@ function Sidebar() {
         </>
     )
 }
+
 export default Sidebar;

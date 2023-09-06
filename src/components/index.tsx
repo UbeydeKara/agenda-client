@@ -12,6 +12,7 @@ import IconButton from "./IconButton";
 import Card from "./Card";
 import MenuItem from "./MenuItem";
 import Select from "./Select";
+import DateField from "./DateField";
 
 export {Container, Stack, Image, Typography, List, ListItem, Drawer,
-    TextField, Form, Button, IconButton, Card, MenuItem, Select}
+    TextField, Form, Button, IconButton, Card, MenuItem, Select, DateField}

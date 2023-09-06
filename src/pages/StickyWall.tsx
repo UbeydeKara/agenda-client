@@ -25,7 +25,7 @@ function StickyWall() {
     }
 
     const stickyNote = (title: string, description: string, isNew: boolean) => (
-        <Card className="p-4 !bg-amber-100">
+        <Card key="title" className="p-4 !bg-amber-100">
             <TextField
                 name="title"
                 onChange={handleChange}

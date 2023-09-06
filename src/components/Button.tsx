@@ -1,16 +1,15 @@
 import React from "react";
-import {rippleEffect} from "../utils/Ripple";
 import Typography from "./Typography";
+import {rippleEffect} from "../utils";
 
 
 export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "contained" | "outlined";
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
-    className?: string;
 }
 
-function Button({variant = "contained", startIcon, endIcon, className, ...props} : IButton) {
+function Button({variant = "contained", startIcon, endIcon, ...props} : IButton) {
 
     const containedClass = "relative overflow-hidden flex flex-row items-center justify-center text-white " +
         "bg-primary-500 hover:bg-primary-600 shadow-lg shadow-primary-500/50 dark:shadow-primary-800/80 font-medium " +
@@ -25,7 +24,7 @@ function Button({variant = "contained", startIcon, endIcon, className, ...props}
     const rippleTheme = variant === "contained" ? "light" : "dark";
 
     return(
-        <button {...props} type="button" className={`${classes} ${className}`.trim()}>
+        <button type="button" {...props} className={`${classes} ${props.className}`.trim()}>
             <div id="rippleOverlay" className="absolute top-0 left-0 right-0 bottom-0"
                  onMouseDown={e => rippleEffect(e, rippleTheme)}/>
                 {startIcon}
