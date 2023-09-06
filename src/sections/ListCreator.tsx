@@ -39,7 +39,7 @@ function ListCreator({open, setOpen}: IListCreator) {
 
     return(
         <Fade open={open}>
-            <Card className="mt-3 !bg-transparent p-3 shadow-transparent">
+            <Card className="!bg-transparent p-3 shadow-transparent">
                 <TextField
                     name="name"
                     placeholder="Liste Adı"

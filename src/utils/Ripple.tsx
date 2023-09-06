@@ -1,5 +1,3 @@
-import {routeRanges} from "../constants";
-
 const background = {
     light: "#EEEEEECC",
     dark: "#ffc7c7cc"

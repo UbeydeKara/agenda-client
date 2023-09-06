@@ -1,8 +1,8 @@
-import {SubtractDays} from "../utils/DateUtil";
+import {subtractDays} from "../utils";
 
 export const datePickerOptions = {
     maxDate: new Date("2024-01-01"),
-    minDate: SubtractDays(new Date(), 1),
+    minDate: subtractDays(new Date(), 1),
     theme: {
         background: "",
         todayBtn: "",

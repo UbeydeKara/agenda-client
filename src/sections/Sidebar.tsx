@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Card, Drawer, IconButton, List, MenuItem, Stack, Typography} from "../components";
 import {
     Bars3Icon,
@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {Link, useParams} from "react-router-dom";
 import ListCreator from "./ListCreator";
 import {routeRanges} from "../constants";
+import {clickAway} from "../utils";
 
 const item = (isActive = false, to: string, title: string, icon: any, count: number) => (
     <Link to={to}>
@@ -21,22 +22,16 @@ const item = (isActive = false, to: string, title: string, icon: any, count: num
         </MenuItem>
     </Link>
 )
-
 function Sidebar() {
     const {todoList, todoListByDate} = useAppSelector(x => x.list);
     const stickyNotes = useAppSelector(x => x.sticky);
     const {leftDrawerOpen} = useAppSelector(x => x.ui);
     const categories = useAppSelector(x => x.category);
-
     const [listMenuOpen, setListOpen] = useState(false);
-
     const dispatch = useAppDispatch();
-
     const {range} = useParams();
     const currentRangeUrl = routeRanges[range as keyof typeof routeRanges || "sticky-wall"]?.url;
-
     const classes = leftDrawerOpen ? " translate-x-52" : ""
-
     const bars = useMemo(() => (
         [
             {
@@ -59,10 +54,13 @@ function Sidebar() {
             },
         ]
     ), [todoList.length, todoListByDate.today.length]);
-
     const handleToggle = () => {
         dispatch(toggleLeftDrawer(!leftDrawerOpen));
     }
+
+    useEffect(() => {
+        clickAway("listContainer", () => setListOpen(false));
+    }, []);
 
     return (
         <>
@@ -76,7 +74,6 @@ function Sidebar() {
                             item(x.to === currentRangeUrl, x.to, x.title, x.icon, x.count)
                         ))}
                     </List>
-
                     <List title="Listeler">
                         {categories?.map((item: any, index: number) => (
                             <MenuItem
@@ -86,22 +83,23 @@ function Sidebar() {
                                     <div className={`h-4 w-4 ${item.colorCode} rounded`}/>
                                 }
                                 endIcon={<Card className="px-3 py-[.2rem] bg-gray-200 font-bold text-xs">5</Card>}>
-                                    {item.name}
+                                {item.name}
                             </MenuItem>
                         ))}
 
-                        <MenuItem className="text-gray-600 text-sm" onClick={() => setListOpen(true)}
-                                  startIcon={<PlusIcon className="h-5 w-5 text-gray-500"/>}>
-                        Yeni Liste Ekle
-                        </MenuItem>
+                        <Stack id="listContainer" spacing={3}>
+                            <MenuItem className="text-gray-600 text-sm" onClick={() => setListOpen(true)}
+                                      startIcon={<PlusIcon className="h-5 w-5 text-gray-500"/>}>
+                                Yeni Liste Ekle
+                            </MenuItem>
 
-                        {/* List creator menu */}
-                        <ListCreator open={listMenuOpen} setOpen={setListOpen}/>
+                            {/* List creator menu */}
+                            <ListCreator open={listMenuOpen} setOpen={setListOpen}/>
+                        </Stack>
 
                     </List>
                 </Stack>
             </Drawer>
-
             {/* Toggle menu */}
             <div className={"absolute top-7 left-7 z-10 transition-all duration-700" + classes}>
                 <IconButton onClick={handleToggle}>
@@ -111,5 +109,4 @@ function Sidebar() {
         </>
     )
 }
-
 export default Sidebar;
