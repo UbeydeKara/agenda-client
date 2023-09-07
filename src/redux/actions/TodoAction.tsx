@@ -30,10 +30,10 @@ export const retrieveListByDate = () => async (dispatch: AppDispatch) => {
 
 export const saveTodo = (todo: TodoPayload) => async (dispatch: AppDispatch) => {
     try {
-        let saveValues = {...todo}
-        if (todo.category) {
-            saveValues = {...saveValues, categoryId: todo.category.categoryId}
-        }
+        let saveValues = {...todo};
+
+        if (saveValues.category)
+            saveValues = {...saveValues, categoryId: todo.category.categoryId, category: null}
 
         const res = await TodoService.save(saveValues);
 

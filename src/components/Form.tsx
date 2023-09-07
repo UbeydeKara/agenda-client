@@ -1,5 +1,4 @@
 import React from "react";
-import Stack from "./Stack";
 import {FormProvider, UseFormReturn} from "react-hook-form";
 
 interface IForm extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -21,9 +20,7 @@ function Form({...props}: IForm) {
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
                 autoComplete="off">
-                <Stack spacing={4} className="my-4 flex-grow">
-                    {props.children}
-                </Stack>
+                {props.children}
             </form>
         </FormProvider>)
 }

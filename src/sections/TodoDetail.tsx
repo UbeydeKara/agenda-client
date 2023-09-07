@@ -47,7 +47,10 @@ function TodoDetail() {
 
     // reset form
     useEffect(() => {
-        reset(selectedTodo);
+        if (Boolean(selectedTodo))
+            reset(selectedTodo);
+        else
+            reset();
     }, [selectedTodo]);
 
     return(
@@ -62,56 +65,54 @@ function TodoDetail() {
                 </IconButton>
             </Stack>
 
-            <Form
-                className="flex h-full"
-                methods={methods}
-                onSave={handleSave}>
+            <Form methods={methods} onSave={handleSave} className="flex h-full">
+                <Stack spacing={4} className="my-4 flex-grow">
+                    <TextField
+                        name="title"
+                        placeholder="Başlık"
+                        className="!bg-gray-100"/>
 
-                <TextField
-                    name="title"
-                    placeholder="Başlık"
-                    className="!bg-gray-100"/>
+                    <TextField
+                        name="description"
+                        placeholder="Açıklama"
+                        rows={6}
+                        className="!bg-gray-100"/>
 
-                <TextField
-                    name="description"
-                    placeholder="Açıklama"
-                    rows={6}
-                    className="!bg-gray-100"/>
+                    {categories.length > 0 &&
+                        <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
+                            <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
+                                Liste
+                            </Typography>
 
-                {categories.length > 0 &&
-                    <Stack id="listContainer" direction="row" spacing={4} itemsCenter>
-                        <Typography variant="span" className="text-[15px] text-gray-600 mb-1">
-                            Liste
+                            <Select options={categories}
+                                    handleChange={setValue}
+                                    variant="outlined"
+                                    className="!bg-gray-100 !px-1 !py-1"
+                                    endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
+                                    optionValue="category"
+                                    optionLabel="name"
+                                    optionIcon="colorCode">
+                                Liste Seçiniz
+                            </Select>
+                        </Stack>
+                    }
+
+                    <Stack id="pickerContainer" direction="row" spacing={4}>
+                        <Typography variant="span" className="text-[15px] text-gray-600 mt-[7px]">
+                            Bitiş Tarihi
                         </Typography>
 
-                        <Select options={categories}
-                                handleChange={setValue}
-                                variant="outlined"
-                                className="!bg-gray-100 !px-1 !py-1"
-                                endIcon={<ChevronDownIcon className="h-6 w-6 text-gray-500"/>}
-                                optionValue="category"
-                                optionLabel="name"
-                                optionIcon="colorCode">
-                            Liste Seçiniz
-                        </Select>
+                        <DateField fieldName="dueAt"/>
                     </Stack>
-                }
 
-                <Stack id="pickerContainer" direction="row" spacing={4}>
-                    <Typography variant="span" className="text-[15px] text-gray-600 mt-[7px]">
-                        Bitiş Tarihi
-                    </Typography>
-
-                    <DateField fieldName="dueAt"/>
-                </Stack>
-
-                <Stack direction="row" spacing={3} itemsCenter className="!mt-auto pb-4">
-                    <Button variant="outlined" className="!bg-gray-100 w-full" onClick={handleDelete}>
-                        {newRecord ? "İptal" : "Etkinliği sil"}
-                    </Button>
-                    <Button type="submit" className="w-full">
-                        {newRecord ? "Oluştur" : "Değişikliği kaydet"}
-                    </Button>
+                    <Stack direction="row" spacing={3} itemsCenter className="!mt-auto pb-4">
+                        <Button variant="outlined" className="!bg-gray-100 w-full" onClick={handleDelete}>
+                            {newRecord ? "İptal" : "Etkinliği sil"}
+                        </Button>
+                        <Button type="submit" className="w-full">
+                            {newRecord ? "Oluştur" : "Değişikliği kaydet"}
+                        </Button>
+                    </Stack>
                 </Stack>
             </Form>
         </Drawer>

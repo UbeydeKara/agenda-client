@@ -1,9 +1,10 @@
 import {CSSTransition} from "react-transition-group";
 import React from "react";
 
-interface IFade extends React.HTMLAttributes<HTMLDivElement> {
+interface IFade {
+    itemKey?: React.Key;
+    appear?: boolean;
     children?: React.ReactNode;
-    open: boolean;
 }
 
 const fadeClass = {
@@ -12,14 +13,16 @@ const fadeClass = {
     exitActive: "transition-opacity opacity-0",
 };
 
-function Fade({open, children}: IFade) {
+function Fade({itemKey, appear, children, ...props}: IFade) {
+    const other =
+        Boolean(itemKey) ? {...props, key: itemKey} : {...props, in: appear, unmountOnExit: true}
+
     return(
         <CSSTransition
-            in={open}
+            {...other}
             timeout={500}
-            classNames={fadeClass}
-            unmountOnExit>
-                {children}
+            classNames={fadeClass}>
+            {children}
         </CSSTransition>
     )
 }

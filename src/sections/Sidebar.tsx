@@ -54,7 +54,7 @@ function Sidebar() {
                 count: stickyNotes.length
             },
         ]
-    ), [todoList.length, todoListByDate.today.length]);
+    ), [todoList.length, todoListByDate.today.length, stickyNotes.length]);
 
     const handleToggle = () => {
         dispatch(toggleLeftDrawer(!leftDrawerOpen));

@@ -40,7 +40,7 @@ function Select({options, handleChange, optionLabel, optionValue, optionIcon, ..
                     <Button {...props} onClick={handleOpen}>
                         {field.value?.name || props.children}
                     </Button>)}/>
-            <Fade open={open}>
+            <Fade appear={open}>
                 <div id="dropdown-states" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="states-button">
                         {options.map((item, index) => (

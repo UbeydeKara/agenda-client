@@ -1,25 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
-import {rippleEffect} from "../utils/Ripple";
+import {rippleEffect} from "../utils";
 import {updateTodoAction} from "../redux/actions/TodoAction";
 import {useAppDispatch} from "../redux/hooks";
 import Stack from "./Stack";
 
-interface IListItem extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IListItem extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     children?: any;
 }
 
 function ListItem(props: IListItem) {
     const item = props.children;
     const [checked, setChecked] = useState(item.isDone || false);
-    const [loaded, setLoaded] = useState(false);
     const dispatch = useAppDispatch();
 
     const classes = [
-        "relative transition-transform overflow-hidden w-full px-4 py-2 border-b border-gray-200 " +
+        "relative overflow-hidden w-full px-4 py-2 border-b border-gray-200 " +
         "hover:bg-gray-100 hover:text-primary-600 focus:z-10 focus:text-primary-600 " +
         "dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white",
-        loaded ? "scale-100" : "scale-50",
         props.className
     ].join(" ").trim();
 
@@ -28,10 +26,6 @@ function ListItem(props: IListItem) {
         setChecked(value);
         dispatch(updateTodoAction({...item, isDone: value}));
     }
-
-    useEffect(() => {
-        setLoaded(true);
-    }, []);
 
     return(
         <button {...props} type="button" className={classes}

@@ -4,7 +4,7 @@ import {Button} from "./index";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import React, {useEffect, useState} from "react";
 import {IButton} from "./Button";
-import {clickAway} from "../utils";
+import {clickAway, dateFormatter} from "../utils";
 import {Controller, useFormContext} from "react-hook-form";
 import Stack from "./Stack";
 
@@ -18,7 +18,7 @@ function DateField({fieldName, ...props}: IDateField) {
 
     // DatePicker
     const dateChange = (date: Date) => {
-        setValue("dueAt", date.toISOString().slice(0, 10));
+        setValue("dueAt", dateFormatter(date));
         clearErrors("dueAt")
     };
 

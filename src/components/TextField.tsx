@@ -31,17 +31,19 @@ function TextField({rows = 1, inputAdornment, name, ...props} : ITextField) {
             name={name}
             control={control}
             render={({ field, fieldState: { error } }) => (
-                <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                        {inputAdornment}
+                <>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                            {inputAdornment}
+                        </div>
+                        {rows > 1 ?
+                            <textarea {...field} {...props} id={name} rows={rows} className={areaClass} /> :
+                            <input {...field} {...props} id={name} type="text" className={inputClass}/>}
                     </div>
-                    {rows > 1 ?
-                        <textarea {...field} {...props} id={name} rows={rows} className={areaClass} /> :
-                        <input {...field} {...props} id={name} type="text" className={inputClass}/>}
-                    {error && <small className="mt-1 inline-block text-xs text-red-500">
+                    {error && <small className="!mt-1 inline-block text-xs text-red-500">
                         {error.message}
                     </small>}
-                </div>
+                </>
             )}
         />
     )

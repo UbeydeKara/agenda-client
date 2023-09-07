@@ -7,6 +7,8 @@ import {toggleRightDrawer} from "../redux/actions/UIActions";
 import {TodoDetail} from "../sections";
 import {useParams} from "react-router-dom";
 import {routeRanges} from "../constants";
+import {TransitionGroup} from "react-transition-group";
+import {Fade} from "../transitions";
 
 
 function TodoList() {
@@ -32,7 +34,7 @@ function TodoList() {
     return(
         <>
             <Container className={containerClass}>
-                <Stack justifyCenter spacing={10} className="h-screen">
+                <Stack justifyCenter spacing={10} className="h-screen py-8">
                     <Stack direction="row" spacing={6}>
                         <Typography variant="h1" className="text-5xl font-bold">
                             {currentRange.title}
@@ -44,20 +46,22 @@ function TodoList() {
                         </Card>
                     </Stack>
 
-                    <Stack>
-                        <Button variant="outlined" className="text-gray-400 !justify-start" onClick={() => selectItem({})}
-                                startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
-                            <Typography variant="span" className="text-gray-500">
-                                Yeni Etkinlik Oluştur
-                            </Typography>
-                        </Button>
+                    <Button variant="outlined" className="text-gray-400 !justify-start" onClick={() => selectItem({})}
+                            startIcon={<PlusIcon className="h-7 w-7 text-gray-500"/>}>
+                        <Typography variant="span" className="text-gray-500">
+                            Yeni Etkinlik Oluştur
+                        </Typography>
+                    </Button>
 
-                        <List>
+                    <List className="!mt-0 overflow-y-auto relative">
+                        <TransitionGroup>
                             {Object.values(data).map((item: any) => (
-                                <ListItem key={item.todoId} onClick={() => selectItem(item)}>{item}</ListItem>
+                                <Fade key={item.todoId} itemKey={item.todoId}>
+                                    <ListItem onClick={() => selectItem(item)}>{item}</ListItem>
+                                </Fade>
                             ))}
-                        </List>
-                    </Stack>
+                        </TransitionGroup>
+                    </List>
                 </Stack>
             </Container>
             <TodoDetail/>
