@@ -1,23 +1,11 @@
 import React from "react";
 
-interface IImage {
-    children?: React.ReactNode;
-    src: string;
-    alt: string;
-    loading?: "eager" | "lazy";
-    className?: string;
+interface IImage extends React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
 }
 
-Image.defaultProps = {
-    className: "",
-    loading: "eager"
-}
-
-function Image({children, src, alt, loading, className} : IImage) {
+function Image({...props} : IImage) {
     return(
-        <img src={src} alt={alt} loading={loading} className={className}>
-            {children}
-        </img>
+        <img {...props} alt={props.alt}/>
     )
 }
 

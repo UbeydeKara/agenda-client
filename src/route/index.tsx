@@ -1,13 +1,14 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import React, {createRef} from "react";
 import Layout from "./Layout";
-import {TodoList} from "../sections";
-import {StickyWall} from "../pages";
+import {Login, StickyWall, TodoList} from "../pages";
 
 export const routes = [
     { key: "list", path: '/', name: 'List', element: <Navigate to="/list/upcoming" replace />, nodeRef: createRef() },
     { key: "list", path: '/list/:range', name: 'List', element: <TodoList />, nodeRef: createRef() },
-    { key: "wall", path: '/sticky-wall', name: 'Wall', element: <StickyWall />, nodeRef: createRef() }
+    { key: "wall", path: '/sticky-wall', name: 'Wall', element: <StickyWall />, nodeRef: createRef() },
+    { key: "login", path: '/login', name: 'Login', element: <Login />, nodeRef: createRef() },
+    { key: "register", path: '/register', name: 'Register', element: <Login />, nodeRef: createRef() }
 ]
 
 export const router = createBrowserRouter([

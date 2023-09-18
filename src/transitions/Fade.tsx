@@ -5,6 +5,7 @@ interface IFade {
     itemKey?: React.Key;
     appear?: boolean;
     children?: React.ReactNode;
+    unmountOnExit?: boolean;
 }
 
 const fadeClass = {
@@ -13,15 +14,16 @@ const fadeClass = {
     exitActive: "transition-opacity opacity-0",
 };
 
-function Fade({itemKey, appear, children, ...props}: IFade) {
+function Fade({itemKey, appear, children, unmountOnExit = true, ...props}: IFade) {
     const other =
-        Boolean(itemKey) ? {...props, key: itemKey} : {...props, in: appear, unmountOnExit: true}
+        Boolean(itemKey) ? {...props, key: itemKey} : {...props, in: appear}
 
     return(
         <CSSTransition
             {...other}
             timeout={500}
-            classNames={fadeClass}>
+            classNames={fadeClass}
+            unmountOnExit={unmountOnExit}>
             {children}
         </CSSTransition>
     )

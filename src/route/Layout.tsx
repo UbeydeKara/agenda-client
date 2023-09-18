@@ -4,6 +4,9 @@ import {Sidebar} from "../sections";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 import React from "react";
 import {routeClass, routes} from "./index";
+import {Fade} from "../transitions";
+
+const authPages = ["/login", "/register"];
 
 function Layout() {
     const location = useLocation()
@@ -14,9 +17,11 @@ function Layout() {
     const { nodeRef } : any =
     routes.find((route) => route.path === location.pathname) ?? {}
 
+    const logged = !authPages.includes(location.pathname);
+
     return (
         <Stack direction="row" className="overflow-hidden">
-            <Sidebar/>
+            {logged && <Sidebar/>}
             <SwitchTransition>
                 <CSSTransition
                     key={pathKey}
