@@ -1,12 +1,21 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Card, Drawer, IconButton, List, MenuItem, Stack, Typography} from "../components";
-import {Bars3Icon, ChevronDoubleRightIcon, ListBulletIcon, PencilSquareIcon, PlusIcon} from "@heroicons/react/20/solid";
+import {
+    AdjustmentsHorizontalIcon, ArrowRightOnRectangleIcon,
+    Bars3Icon,
+    ChevronDoubleRightIcon,
+    ListBulletIcon,
+    PencilSquareIcon,
+    PlusIcon
+} from "@heroicons/react/20/solid";
 import {toggleLeftDrawer} from "../redux/actions/UIActions";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import ListCreator from "./ListCreator";
 import {routeRanges} from "../constants";
 import {clickAway} from "../utils";
+import {logout} from "../redux/actions/AuthAction";
+import {useLocalStorage} from "../hooks";
 
 const item = (isActive = false, to: string, title: string, icon: any, count: number) => (
     <Link key={to} to={to}>
@@ -27,6 +36,8 @@ function Sidebar() {
     const [listMenuOpen, setListOpen] = useState(false);
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [user, setUser] = useLocalStorage("user");
 
     const {range} = useParams();
     const currentRangeUrl = routeRanges[range as keyof typeof routeRanges || "sticky-wall"]?.url;
@@ -58,6 +69,13 @@ function Sidebar() {
 
     const handleToggle = () => {
         dispatch(toggleLeftDrawer(!leftDrawerOpen));
+    }
+
+    const handleLogout = () => {
+        dispatch(logout()).then(() => {
+            setUser(null);
+            navigate("/login")
+        })
     }
 
     useEffect(() => {
@@ -99,8 +117,25 @@ function Sidebar() {
                             {/* List creator menu */}
                             <ListCreator open={listMenuOpen} setOpen={setListOpen}/>
                         </Stack>
-
                     </List>
+
+                    {/*Settings and logout*/}
+                    <Stack className="!mt-auto">
+                        <List>
+                            <MenuItem
+                                className="text-gray-600 text-sm"
+                                startIcon={<AdjustmentsHorizontalIcon className="h-5 w-5 text-gray-500"/>}>
+                                Ayarlar
+                            </MenuItem>
+
+                            <MenuItem
+                                className="text-gray-600 text-sm"
+                                startIcon={<ArrowRightOnRectangleIcon className="h-5 w-5 text-gray-500"/>}
+                                onClick={handleLogout}>
+                                Çıkış yap
+                            </MenuItem>
+                        </List>
+                    </Stack>
                 </Stack>
             </Drawer>
 

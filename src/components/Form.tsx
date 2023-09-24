@@ -6,15 +6,15 @@ interface IForm extends React.FormHTMLAttributes<HTMLFormElement> {
     onSave: Function;
 }
 
-function Form({...props}: IForm) {
+function Form({methods, onSave, ...props}: IForm) {
 
-    const {handleSubmit, getValues} = props.methods;
+    const {handleSubmit, getValues} = methods;
 
     const onSubmit = () => {
-        props.onSave(getValues());
+        onSave(getValues());
     }
 
-    return (<FormProvider {...props.methods}>
+    return (<FormProvider {...methods}>
             <form
                 {...props}
                 onSubmit={handleSubmit(onSubmit)}

@@ -38,7 +38,7 @@ function TextField({rows = 1, inputAdornment, name, ...props} : ITextField) {
                         </div>
                         {rows > 1 ?
                             <textarea {...field} {...props} id={name} rows={rows} className={areaClass} /> :
-                            <input {...field} {...props} id={name} type="text" className={inputClass}/>}
+                            <input {...field} {...props} id={name} className={inputClass}/>}
                     </div>
                     {error && <small className="!mt-1 inline-block text-xs text-red-500">
                         {error.message}

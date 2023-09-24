@@ -1,15 +1,17 @@
-import {useLocation, useOutlet} from "react-router-dom";
+import {useLocation, useNavigate, useOutlet} from "react-router-dom";
 import {Stack} from "../components";
 import {Sidebar} from "../sections";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
-import React from "react";
+import React, {useEffect} from "react";
 import {routeClass, routes} from "./index";
-import {Fade} from "../transitions";
+import {useLocalStorage} from "../hooks";
 
 const authPages = ["/login", "/register"];
 
 function Layout() {
-    const location = useLocation()
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [user] = useLocalStorage("user");
     const pathKey = location.pathname === "/sticky-wall" ? 0 : 1;
 
     const currentOutlet = useOutlet()
@@ -18,6 +20,11 @@ function Layout() {
     routes.find((route) => route.path === location.pathname) ?? {}
 
     const logged = !authPages.includes(location.pathname);
+
+    useEffect(() => {
+        if (!user && logged)
+            navigate("/login")
+    }, [user]);
 
     return (
         <Stack direction="row" className="overflow-hidden">
