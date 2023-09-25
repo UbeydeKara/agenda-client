@@ -1,6 +1,7 @@
 import TodoService, {TodoPayload} from "../../services/todo-service";
 import {AppDispatch} from "../store";
 import {DELETE_TODO, GET_ALL_TODOS_BY_DATE, RETRIEVE_TODO_LIST, SAVE_TODO, SELECT_TODO, UPDATE_TODO} from "../types";
+import {showAlert} from "./AlertAction";
 
 export const retrieveList = () => async (dispatch: AppDispatch) => {
     try {
@@ -43,6 +44,7 @@ export const saveTodo = (todo: TodoPayload) => async (dispatch: AppDispatch) => 
         });
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Etkinlik kaydedilemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }
@@ -61,6 +63,7 @@ export const updateTodoAction = (todo: TodoPayload) => async (dispatch: AppDispa
         });
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Etkinlik güncellenemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }
@@ -74,6 +77,7 @@ export const deleteTodoById = (todoId: string) => async (dispatch: AppDispatch) 
         });
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Etkinlik silinemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }

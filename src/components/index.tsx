@@ -14,6 +14,7 @@ import MenuItem from "./MenuItem";
 import Select from "./Select";
 import DateField from "./DateField";
 import Grid from "./Grid";
+import Alert from "./Alert";
 
 export {
     Container,
@@ -31,5 +32,6 @@ export {
     MenuItem,
     Select,
     DateField,
-    Grid
+    Grid,
+    Alert
 }

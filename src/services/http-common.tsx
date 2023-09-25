@@ -1,4 +1,5 @@
 import axios from "axios";
+import {getAccessToken} from "../utils";
 
 // Create an axios instance
 let AxiosInstance = axios.create({
@@ -11,12 +12,9 @@ let AxiosInstance = axios.create({
 });
 
 AxiosInstance.interceptors.request.use(function (config) {
-    const loggedUser = localStorage.getItem("user");
-    if (loggedUser) {
-        const user = JSON.parse(loggedUser);
-        if (user && user.access_token) {
-            config.headers["Authorization"] = "Bearer " + user.access_token;
-        }
+    const token = getAccessToken();
+    if (token) {
+        config.headers["Authorization"] = token;
     }
     return config;
 });

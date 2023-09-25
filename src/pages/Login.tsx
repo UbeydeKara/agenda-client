@@ -11,12 +11,15 @@ import {ReactComponent as ChecklistSvg} from "../static/login.svg"
 import {useMemo} from "react";
 import {useAppDispatch} from "../redux/hooks";
 import {login, register} from "../redux/actions/AuthAction";
+import {useLocalStorage} from "../hooks";
 
 function Login() {
     const location = useLocation();
-    const isLogin = location.pathname === "/login";
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const [, setUser] = useLocalStorage("user");
+
+    const isLogin = location.pathname === "/login";
 
     const registerMethods = useForm({
         resolver: yupResolver(registerFormSchema),
@@ -31,11 +34,14 @@ function Login() {
     });
 
     const handleLogin = (values: any) => {
-        dispatch(login(values.username, values.password)).then(() => navigate("/list/upcoming"))
+        dispatch(login(values.username, values.password)).then((data) => {
+            setUser(data);
+            navigate("/list/upcoming");
+        })
     };
 
     const handleRegister = (values: any) => {
-        dispatch(register(values.username, values.email, values.password)).then(() => navigate("/login"))
+        dispatch(register(values.username, values.email, values.password)).then(() => handleLogin(values))
     };
 
     const loginStack = useMemo(() => {

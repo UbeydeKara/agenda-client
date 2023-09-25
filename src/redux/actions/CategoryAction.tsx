@@ -1,6 +1,7 @@
 import {AppDispatch} from "../store";
 import CategoryService from "../../services/category-service";
 import {DELETE_CATEGORY, RETRIEVE_CATEGORIES, SAVE_CATEGORY} from "../types";
+import {showAlert} from "./AlertAction";
 
 export const retrieveCategories = () => async (dispatch: AppDispatch) => {
     try {
@@ -24,6 +25,7 @@ export const saveCategory = (category: any) => async (dispatch: AppDispatch) => 
         })
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Kategori kaydedilemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }
@@ -37,6 +39,7 @@ export const deleteCategoryById = (categoryId: string) => async (dispatch: AppDi
         })
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Kategori silinemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }

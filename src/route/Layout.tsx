@@ -1,5 +1,5 @@
 import {useLocation, useNavigate, useOutlet} from "react-router-dom";
-import {Stack} from "../components";
+import {Alert} from "../components";
 import {Sidebar} from "../sections";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 import React, {useEffect} from "react";
@@ -27,7 +27,8 @@ function Layout() {
     }, [user]);
 
     return (
-        <Stack direction="row" className="overflow-hidden">
+        <>
+            <Alert/>
             {logged && <Sidebar/>}
             <SwitchTransition>
                 <CSSTransition
@@ -43,7 +44,7 @@ function Layout() {
                     )}
                 </CSSTransition>
             </SwitchTransition>
-        </Stack>
+        </>
     )
 }
 

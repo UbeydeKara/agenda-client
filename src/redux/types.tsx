@@ -19,3 +19,6 @@ export const DELETE_CATEGORY = "DELETE_CATEGORY";
 // ui
 export const TOGGLE_RIGHT_DRAWER = "TOGGLE_RIGHT_DRAWER";
 export const TOGGLE_LEFT_DRAWER = "TOGGLE_LEFT_DRAWER";
+
+// Alert
+export const ALERT_MESSAGE = "ALERT_MESSAGE";

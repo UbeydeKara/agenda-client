@@ -1,6 +1,7 @@
 import {AppDispatch} from "../store";
 import {DELETE_STICKY, RETRIEVE_STICKIES, SAVE_STICKY} from "../types";
 import StickyService from "../../services/sticky-service";
+import {showAlert} from "./AlertAction";
 
 export const retrieveStickies = () => async (dispatch: AppDispatch) => {
     try {
@@ -24,6 +25,7 @@ export const saveSticky = (note: any) => async (dispatch: AppDispatch) => {
         })
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Yapışkan not kaydedilemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }
@@ -37,6 +39,7 @@ export const deleteCategoryById = (noteId: string) => async (dispatch: AppDispat
         })
         return Promise.resolve(res.data);
     } catch (err) {
+        dispatch(showAlert("Yapışkan not silinemedi, sunucuda bir hata oluştu."));
         return Promise.reject(err)
     }
 }
